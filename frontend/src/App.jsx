@@ -1,9 +1,10 @@
 import './App.css'
+import './styles/tailwind.css'
 
 function App() {
   return (
     <>
-      <h1 className="text-center text-2xl font-bold bg-green-800 text-white p-2">
+      <h1 className="heading bg-dark text-light">
         Event Orbit
       </h1>
     </>
