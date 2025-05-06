@@ -1,13 +1,10 @@
-import './App.css'
-import './styles/tailwind.css'
-
 function App() {
   return (
-    <>
-      <h1 className="heading bg-dark text-light">
-        Event Orbit
+    <div className="bg-base-200">
+      <h1 className="text-2xl font-bold p-2 text-center bg-secondary text-white">
+        EVENT ORBIT
       </h1>
-    </>
+    </div>
   )
 }
 
