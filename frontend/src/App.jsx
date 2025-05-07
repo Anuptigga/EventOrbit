@@ -1,11 +1,15 @@
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import EventForm from './components/EventForm';
+import EventList from './components/EventList'; 
 function App() {
   return (
-    <div className="bg-base-200">
-      <h1 className="text-2xl font-bold p-2 text-center bg-secondary text-white">
-        EVENT ORBIT
-      </h1>
-    </div>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<EventForm />} />
+        <Route path="/EventList" element={<EventList />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
