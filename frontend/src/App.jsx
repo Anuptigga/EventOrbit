@@ -1,13 +1,16 @@
 import SignIn from './components/SignIn'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Home from './pages/Home'
+import Navbar from './components/Navbar'
 
 function App() {
   return (
-    <div className="bg-base-200">
-      <h1 className="text-2xl font-bold p-2 text-center bg-secondary text-white">
-        z EVENT ORBIT
-      </h1>
-      <SignIn />
-    </div>
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </Router>
   )
 }
 
