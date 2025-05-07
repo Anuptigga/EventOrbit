@@ -1,0 +1,113 @@
+import React, { useEffect, useState } from 'react'
+import { FcGoogle } from 'react-icons/fc'
+import { FaGithub } from 'react-icons/fa'
+import { assets } from '../assets/assets'
+
+const SignIn = () => {
+  const [state, setState] = useState('Login')
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [])
+
+  return (
+    <div className="absolute top-0 left-0 right-0 bottom-0 z-10 backdrop-blur-sm bg-neutral/30 flex justify-center items-center">
+      <form className="relative bg-base-100 p-8 rounded-2xl shadow-lg w-110">
+        <img
+          src={assets.cross_icon}
+          alt="Cross Icon"
+          className="absolute top-5 right-5 cursor-pointer"
+        />
+        <h2 className="text-2xl font-bold text-center mb-6">{state}</h2>
+        {state === 'Sign Up' && (
+          <div className="mb-4">
+            <label className="block text-neutral m-2">
+              Name <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              className="w-full outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-accent 
+            rounded-lg p-2 px-6"
+              placeholder="Name"
+              required
+            />
+          </div>
+        )}
+        <div className="mb-4">
+          <label className="block text-neutral m-2 required:">
+            Email <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="email"
+            className="w-full outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-accent rounded-lg p-2 px-6"
+            placeholder="Email address"
+            required
+          />
+        </div>
+        <div className="mb-6">
+          <label className="block text-neutral m-2 required:">
+            Password <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="password"
+            className="w-full outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-accent rounded-lg p-2 px-6"
+            placeholder="Password"
+            required
+          />
+        </div>
+        <div className="flex items-center justify-between mb-6">
+          <label className="flex items-center">
+            <input
+              type="checkbox"
+              className="checkbox checkbox-secondary rounded-md"
+            />
+            <span className="ml-2 text-neutral">Remember me</span>
+          </label>
+          <a href="#" className="text-error hover:underline">
+            Forgot password?
+          </a>
+        </div>
+        <button type="submit" className="btn btn-primary w-full mb-2">
+          {state}
+        </button>
+        <div className="divider mb-6">Or continue with</div>
+        <div className="flex justify-between w-1/2">
+          <button className="btn btn-outline w-full mr-2 flex items-center">
+            <FcGoogle /> Google
+          </button>
+          <button className="btn btn-outline w-full ml-2 flex items-center">
+            <FaGithub /> GitHub
+          </button>
+        </div>
+        {state === 'Login' ? (
+          <p className="text-center mt-6 text-gray-600">
+            Don't have an account?{' '}
+            <a
+              href="#"
+              className="text-primary/90 hover:underline hover:text-primary"
+              onClick={() => setState('Sign Up')}
+            >
+              Sign Up
+            </a>
+          </p>
+        ) : (
+          <p className="text-center mt-6 text-gray-600">
+            Already have an account?{' '}
+            <a
+              href="#"
+              className="text-primary/90 hover:underline hover:text-primary"
+              onClick={() => setState('Login')}
+            >
+              Log In
+            </a>
+          </p>
+        )}
+      </form>
+    </div>
+  )
+}
+
+export default SignIn
