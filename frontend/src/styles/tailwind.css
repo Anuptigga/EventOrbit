@@ -62,3 +62,16 @@
     @apply font-semibold rounded-xl;
   }
 }
+
+@keyframes gradientAnimation {
+  0% {
+    background: linear-gradient(135deg, oklch(96% 0.03 250), oklch(94% 0.04 320));
+  }
+  50% {
+    background: linear-gradient(135deg, oklch(96% 0.03 100), oklch(94% 0.04 400));
+  }
+  100% {
+    background: linear-gradient(135deg, oklch(96% 0.03 250), oklch(94% 0.04 320));
+  }
+}
+
