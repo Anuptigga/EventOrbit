@@ -80,8 +80,8 @@ export default function EventForm() {
       }}
     >
       <ToastContainer />
-      <div className="w-full max-w-4xl [background-color:oklch(97%_0.001_106.424)] p-10 rounded-3xl shadow-2xl">
-        <h2 className="text-3xl font-bold [color:oklch(58%_0.233_277.117)] mb-8 text-center">
+      <div className="w-full max-w-4xl bg-base-100 p-10 rounded-3xl shadow-2xl">
+        <h2 className="text-3xl font-bold text-primary mb-8 text-center">
           Create New Event
         </h2>
 
