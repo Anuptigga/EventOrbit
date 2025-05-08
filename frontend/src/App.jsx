@@ -4,7 +4,7 @@ import EventList from './components/EventList'
 import SignIn from './components/SignIn'
 import HomePage from './components/HomePage'
 import Navbar from './components/Navbar'
-import { AuthProvider } from './contexts/AuthContext'
+import Footer from './components/Footer'
 
 function App() {
   return (
@@ -16,6 +16,7 @@ function App() {
         <Route path="/EventForm" element={<EventForm />} />
         <Route path="/EventList" element={<EventList />} />
       </Routes>
+      <Footer />
     </Router>
   )
 }

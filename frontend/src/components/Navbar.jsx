@@ -15,24 +15,24 @@ export default function Navbar() {
       <div className="flex space-x-6 font-medium">
         <Link
           to="about"
-          className="text-gray-700 hover:text-indigo-600 transition-colors duration-200"
+          className="text-gray-700 hover:text-accent transition-colors duration-200"
         >
           About
         </Link>
         <Link
           to="contact"
-          className="text-gray-700 hover:text-purple-600 transition-colors duration-200"
+          className="text-gray-700 hover:text-accent transition-colors duration-200"
         >
           Contact
         </Link>
         <Link
           to="eventlist"
-          className="text-gray-700 hover:text-pink-500 transition-colors duration-200"
+          className="text-gray-700 hover:text-accent transition-colors duration-200"
         >
           Event Lists
         </Link>
         <button
-          className="text-gray-700 cursor-pointer hover:text-indigo-600 transition-colors duration-200"
+          className="text-gray-700 cursor-pointer hover:text-accent transition-colors duration-200"
           onClick={handleClickLogin}
         >
           Log In

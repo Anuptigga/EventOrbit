@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import Navbar from './Navbar'
 
 export default function HomePage() {
   const phrases = ['Explore', 'Track', 'Participate']
@@ -40,22 +39,13 @@ export default function HomePage() {
               'Simplify event participation and never miss an opportunity again.'}
           </p>
           <Link
-            to="eventlist"
+            to="eventform"
             className="inline-block bg-gradient-to-r from-teal-400 via-blue-400 to-indigo-400 text-white px-8 py-3 rounded-lg shadow-lg hover:brightness-110 transition-transform transform hover:scale-105"
           >
             Get Started
           </Link>
         </section>
       ))}
-
-      {/* Footer */}
-      <footer className="bg-gray-900 py-6 text-center text-gray-400 text-sm">
-        &copy; {new Date().getFullYear()}{' '}
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-500 to-pink-500 font-semibold">
-          Event Orbit
-        </span>{' '}
-        • All rights reserved.
-      </footer>
     </div>
   )
 }
