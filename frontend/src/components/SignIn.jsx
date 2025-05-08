@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { FcGoogle } from 'react-icons/fc'
 import { FaGithub } from 'react-icons/fa'
 import { assets } from '../assets/assets'
 import { login, signup } from '../services/api/auth'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 
 const SignIn = () => {
-  const navigate = useNavigate()
+  const {setIsOpen} = useAuth()
+  // const navigate = useNavigate()
 
   const { isOpen, handleClickCross } = useAuth()
   console.log(isOpen)
@@ -38,16 +41,23 @@ const SignIn = () => {
       let response
       if (state === 'Login') {
         response = await login(formData.email, formData.password)
+        toast.success('Logged in successfully!')
+        setIsOpen(false)
+        // navigate('/')
       } else {
         response = await signup(
           formData.name,
           formData.email,
           formData.password
         )
+        toast.success('Signup successful!')
+        setIsOpen(false)
+        // navigate('/')
       }
-      console.log('Signup successfull', response)
+      console.log('Auth successful:', response)
     } catch (error) {
       console.log(error)
+      toast.error('Something went wrong. Please try again.')
     }
   }
 
@@ -160,6 +170,7 @@ const SignIn = () => {
               </a>
             </p>
           )}
+          <ToastContainer position="top-right" autoClose={3000} />
         </form>
       </div>
     )

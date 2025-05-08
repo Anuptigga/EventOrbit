@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css'
+import { createEvent } from '../services/api/event'
 
 export default function EventForm() {
   const [newCategory, setNewCategory] = useState('')
@@ -10,7 +11,7 @@ export default function EventForm() {
     eventDescription: '',
     eventDate: '',
     eventVenue: '',
-    clubName: '',
+    eventPoster: '',
     eventCategory: [], // now stores array of objects like [{ name: 'Tech' }]
   })
 
@@ -20,7 +21,9 @@ export default function EventForm() {
     const trimmed = newCategory.trim()
     if (
       trimmed &&
-      !eventData.eventCategory.some((cat) => cat.name.toLowerCase() === trimmed.toLowerCase())
+      !eventData.eventCategory.some(
+        (cat) => cat.name.toLowerCase() === trimmed.toLowerCase()
+      )
     ) {
       setEventData((prev) => ({
         ...prev,
@@ -45,14 +48,16 @@ export default function EventForm() {
     }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    console.log(eventData)
+
     e.preventDefault()
     if (
       !eventData.eventName ||
       !eventData.eventDescription ||
       !eventData.eventDate ||
       !eventData.eventVenue ||
-      !eventData.clubName
+      !eventData.eventPoster
     ) {
       toast.error('🚨 Please fill all the required fields!')
       return
@@ -60,16 +65,22 @@ export default function EventForm() {
 
     console.log('Event Data:', eventData)
 
-    setEventData({
-      eventName: '',
-      eventDescription: '',
-      eventDate: '',
-      eventVenue: '',
-      clubName: '',
-      eventCategory: [],
-    })
-    setNewCategory('')
-    navigate('/EventList')
+    try {
+      await createEvent(eventData)
+      toast.success('🎉 Event created successfully!')
+
+      navigate('/EventList')
+    } catch (error) {
+      console.error('Error creating event:', error) // Log the error for debugging
+
+      // Enhanced error message
+      const errorMessage =
+        error.response && error.response.data
+          ? error.response.data.message
+          : '❌ Failed to create event. Please try again.'
+
+      toast.error(errorMessage)
+    }
   }
 
   return (
@@ -78,7 +89,6 @@ export default function EventForm() {
       // style={{
       //   background: 'linear-gradient(135deg, oklch(96% 0.03 250), oklch(94% 0.04 320))',
       // }}
-      
     >
       <ToastContainer />
       <div className="w-full mx-4 max-w-4xl bg-base-100 p-10 rounded-3xl shadow-2xl">
@@ -89,7 +99,9 @@ export default function EventForm() {
         <form className="space-y-6" onSubmit={handleSubmit}>
           {/* --- Other Fields --- */}
           <div className="flex flex-col space-y-1">
-            <label className="[color:oklch(21%_0.006_56.043)] font-semibold">Event Name</label>
+            <label className="[color:oklch(21%_0.006_56.043)] font-semibold">
+              Event Name <span className="text-error">*</span>
+            </label>
             <input
               type="text"
               name="eventName"
@@ -102,7 +114,9 @@ export default function EventForm() {
           </div>
 
           <div className="flex flex-col space-y-1">
-            <label className="[color:oklch(21%_0.006_56.043)] font-semibold">Event Description</label>
+            <label className="[color:oklch(21%_0.006_56.043)] font-semibold">
+              Event Description <span className="text-error">*</span>
+            </label>
             <textarea
               name="eventDescription"
               rows="3"
@@ -115,7 +129,9 @@ export default function EventForm() {
           </div>
 
           <div className="flex flex-col space-y-1">
-            <label className="[color:oklch(21%_0.006_56.043)] font-semibold">Event Date</label>
+            <label className="[color:oklch(21%_0.006_56.043)] font-semibold">
+              Event Date <span className="text-error">*</span>
+            </label>
             <input
               type="date"
               name="eventDate"
@@ -127,7 +143,9 @@ export default function EventForm() {
           </div>
 
           <div className="flex flex-col space-y-1">
-            <label className="[color:oklch(21%_0.006_56.043)] font-semibold">Event Venue</label>
+            <label className="[color:oklch(21%_0.006_56.043)] font-semibold">
+              Event Venue <span className="text-error">*</span>
+            </label>
             <input
               type="text"
               name="eventVenue"
@@ -140,11 +158,13 @@ export default function EventForm() {
           </div>
 
           <div className="flex flex-col space-y-1">
-            <label className="[color:oklch(21%_0.006_56.043)] font-semibold">Club's Name</label>
+            <label className="[color:oklch(21%_0.006_56.043)] font-semibold">
+              Event poster <span className="text-error">*</span>
+            </label>
             <input
               type="text"
-              name="clubName"
-              value={eventData.clubName}
+              name="eventPoster"
+              value={eventData.eventPoster}
               onChange={handleChange}
               placeholder="Enter club's name"
               className="w-full px-4 py-2 rounded-lg [background-color:oklch(98%_0.001_106.423)] border [border-color:oklch(92%_0.003_48.717)] shadow-sm focus:[ring-color:oklch(58%_0.233_277.117)] focus:ring-2 outline-none"
@@ -154,7 +174,7 @@ export default function EventForm() {
 
           {/* --- Category Section --- */}
           <div className="border-t [border-color:oklch(92%_0.003_48.717)] pt-6 mt-6">
-            <h3 className="text-lg font-bold [color:oklch(58%_0.233_277.117)] mb-3">
+            <h3 className="text-lg font-bold text-primary mb-3">
               Event Categories (Optional)
             </h3>
             <div className="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-2 md:space-y-0">
@@ -168,7 +188,7 @@ export default function EventForm() {
               <button
                 type="button"
                 onClick={handleAddCategory}
-                className="[background-color:oklch(58%_0.233_277.117)] hover:[background-color:oklch(58%_0.233_277.117/0.9)] [color:oklch(96%_0.018_272.314)] font-semibold px-4 py-2 rounded-lg transition"
+                className="bg-primary cursor-pointer text-primary-content hover:bg-primary font-semibold px-4 py-2 rounded-lg transition"
               >
                 Add Category
               </button>
@@ -180,7 +200,9 @@ export default function EventForm() {
                   key={idx}
                   className="flex items-center justify-between px-4 py-2 [background-color:oklch(97%_0.001_106.424)] border [border-color:oklch(92%_0.003_48.717)] rounded-lg"
                 >
-                  <span className="[color:oklch(21%_0.006_56.043)] font-medium">{cat.name}</span>
+                  <span className="[color:oklch(21%_0.006_56.043)] font-medium">
+                    {cat.name}
+                  </span>
                   <button
                     type="button"
                     onClick={() => handleRemoveCategory(idx)}
@@ -195,7 +217,7 @@ export default function EventForm() {
 
           <button
             type="submit"
-            className="w-full [background-color:oklch(58%_0.233_277.117)] hover:[background-color:oklch(58%_0.233_277.117/0.9)] [color:oklch(96%_0.018_272.314)] font-semibold py-3 px-4 rounded-xl transition duration-200"
+            className="w-full cursor-pointer bg-primary hover:bg-primary-focus text-primary-content font-semibold py-3 px-4 rounded-xl transition duration-200"
           >
             Create Event
           </button>

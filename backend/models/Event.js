@@ -1,12 +1,12 @@
 import mongoose, { Schema } from "mongoose";
 
 const eventSchema= new mongoose.Schema({
-    title:{type:String,require:true},
-    desc:{type:String,require:true},
-    img:{type:String,require:true},
-    date:{type:Date,require:true},
-    venue:{type:String,require:true},
-    category:[{type:String}],
+    eventName:{type:String,require:true},
+    eventDescription:{type:String,require:true},
+    eventPoster:{type:String,require:true},
+    eventDate:{type:Date,require:true},
+    eventVenue:{type:String,require:true},
+    eventCategory:[{type:String}],
 },{timestamps:true})
 
 const Event =mongoose.model('event',eventSchema)
