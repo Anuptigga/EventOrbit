@@ -5,7 +5,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <nav className="flex mb-6 items-center justify-between px-6 py-4 bg-primary text-primary-content shadow-2xl">
+    <nav className="flex mb-6 items-center justify-between px-6 py-4 bg-primary text-primary-content shadow-lg">
       <div className="text-xl font-bold">Event Orbit</div>
 
       {/* Hamburger menu - visible only on small screens */}
