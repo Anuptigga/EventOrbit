@@ -1,6 +1,7 @@
-import express from 'express';
-import dbConnect from './config/dbConfig.js';
+import express from 'express'
+import dbConnect from './config/dbConfig.js'
 import authRoute from "./routes/authRoute.js"
+import eventRoute from "./routes/eventRoute.js"
 import cors from "cors"
 
 
@@ -10,6 +11,7 @@ app.use(express.json())
 dbConnect();
 
 app.use('/api/auth', authRoute)
+app.use('/api/event',eventRoute)
 app.get('/', (req, res) => {
     res.send("server working!");
 })
