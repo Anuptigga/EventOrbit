@@ -3,12 +3,7 @@ import { useAuth } from '../hooks/useAuth'
 // import { useState } from 'react'
 
 export default function Navbar() {
-  const { handleClickLogin, setIsLoggedIn, isLoggedIn } = useAuth()
-
-  const handleLogOut = () => {
-    localStorage.removeItem('token')
-    setIsLoggedIn(false)
-  }
+  const { handleClickLogin, isLoggedIn, handleLogOut } = useAuth()
 
   return (
     <nav className="flex items-center justify-between px-8 py-4 bg-white shadow-md">

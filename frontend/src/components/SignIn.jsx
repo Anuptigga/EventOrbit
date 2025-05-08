@@ -12,7 +12,7 @@ const SignIn = () => {
   const { setIsOpen } = useAuth()
   // const navigate = useNavigate()
 
-  const { isOpen, handleClickCross } = useAuth()
+  const { isOpen, handleClickCross, handleLogIn } = useAuth()
   // console.log(isOpen)
 
   const [state, setState] = useState('Login')
@@ -41,7 +41,7 @@ const SignIn = () => {
       let response
       if (state === 'Login') {
         response = await login(formData.email, formData.password)
-        toast.success('Logged in successfully!')
+        handleLogIn()
         setIsOpen(false)
         // navigate('/')
       } else {
@@ -170,7 +170,7 @@ const SignIn = () => {
               </a>
             </p>
           )}
-          <ToastContainer position="top-right" autoClose={3000} />
+          {/* <ToastContainer position="top-right" autoClose={3000} /> */}
         </form>
       </div>
     )
