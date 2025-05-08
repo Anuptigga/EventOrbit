@@ -2,9 +2,15 @@ import React, { useEffect, useState } from 'react'
 import { FcGoogle } from 'react-icons/fc'
 import { FaGithub } from 'react-icons/fa'
 import { assets } from '../assets/assets'
+import {login,signup} from "../services/api/auth"
 
 const SignIn = () => {
   const [state, setState] = useState('Login')
+  const [formData, setFormData]=useState({
+    name:'',
+    email:'',
+    password:''
+  })
 
   useEffect(() => {
     document.body.style.overflow = 'hidden'
@@ -13,9 +19,33 @@ const SignIn = () => {
     }
   }, [])
 
+  const handleChange=(e)=>{
+    const {name,value}=e.target;
+    setFormData(prev=>({
+      ...prev,
+      [name]:value
+    }))
+  }
+
+  const handleSubmit= async(e)=>{
+     e.preventDefault();
+    try {
+      let response;
+      if(state==='Login'){
+        response= await login(formData.email,formData.password)
+      }
+      else{
+        response= await signup(formData.name,formData.email,formData.password)
+      }
+      console.log("Signup successfull",response)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div className="absolute top-0 left-0 right-0 bottom-0 z-10 backdrop-blur-sm bg-neutral/30 flex justify-center items-center">
-      <form className="relative bg-base-100 p-8 rounded-2xl shadow-lg w-110">
+      <form className="relative bg-base-100 p-8 rounded-2xl shadow-lg w-110" onSubmit={handleSubmit}>
         <img
           src={assets.cross_icon}
           alt="Cross Icon"
@@ -29,10 +59,13 @@ const SignIn = () => {
             </label>
             <input
               type="text"
+              name="name"
               className="w-full outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-accent 
             rounded-lg p-2 px-6"
               placeholder="Name"
               required
+              value={formData.name}
+              onChange={handleChange}
             />
           </div>
         )}
@@ -42,9 +75,12 @@ const SignIn = () => {
           </label>
           <input
             type="email"
+            name="email"
             className="w-full outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-accent rounded-lg p-2 px-6"
             placeholder="Email address"
             required
+            value={formData.email}
+            onChange={handleChange}
           />
         </div>
         <div className="mb-6">
@@ -53,9 +89,12 @@ const SignIn = () => {
           </label>
           <input
             type="password"
+            name="password"
             className="w-full outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-accent rounded-lg p-2 px-6"
             placeholder="Password"
             required
+            value={formData.password}
+            onChange={handleChange}
           />
         </div>
         <div className="flex items-center justify-between mb-6">
