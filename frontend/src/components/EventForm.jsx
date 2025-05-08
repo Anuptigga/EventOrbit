@@ -74,13 +74,14 @@ export default function EventForm() {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center px-4 py-8"
-      style={{
-        background: 'linear-gradient(135deg, oklch(96% 0.03 250), oklch(94% 0.04 320))',
-      }}
+      className="min-h-screen flex items-center justify-center px-4 py-8 bg-base-200"
+      // style={{
+      //   background: 'linear-gradient(135deg, oklch(96% 0.03 250), oklch(94% 0.04 320))',
+      // }}
+      
     >
       <ToastContainer />
-      <div className="w-full max-w-4xl bg-base-100 p-10 rounded-3xl shadow-2xl">
+      <div className="w-full mx-4 max-w-4xl bg-base-100 p-10 rounded-3xl shadow-2xl">
         <h2 className="text-3xl font-bold text-primary mb-8 text-center">
           Create New Event
         </h2>
