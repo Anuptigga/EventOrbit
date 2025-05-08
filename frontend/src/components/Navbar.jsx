@@ -1,8 +1,15 @@
 import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
+// import { useState } from 'react'
 
 export default function Navbar() {
-  const { handleClickLogin } = useAuth()
+  const { handleClickLogin, setIsLoggedIn, isLoggedIn } = useAuth()
+
+  const handleLogOut = () => {
+    localStorage.removeItem('token')
+    setIsLoggedIn(false)
+  }
+
   return (
     <nav className="flex items-center justify-between px-8 py-4 bg-white shadow-md">
       <Link
@@ -33,9 +40,9 @@ export default function Navbar() {
         </Link>
         <button
           className="text-gray-700 cursor-pointer hover:text-accent transition-colors duration-200"
-          onClick={handleClickLogin}
+          onClick={isLoggedIn ? handleLogOut : handleClickLogin}
         >
-          Log In
+          {isLoggedIn ? 'Log Out' : 'Log In'}
         </button>
       </div>
     </nav>

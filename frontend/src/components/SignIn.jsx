@@ -9,11 +9,11 @@ import { login, signup } from '../services/api/auth'
 import { useAuth } from '../hooks/useAuth'
 
 const SignIn = () => {
-  const {setIsOpen} = useAuth()
+  const { setIsOpen } = useAuth()
   // const navigate = useNavigate()
 
   const { isOpen, handleClickCross } = useAuth()
-  console.log(isOpen)
+  // console.log(isOpen)
 
   const [state, setState] = useState('Login')
 

@@ -4,8 +4,10 @@ const AuthContext = createContext()
 
 function AuthProvider({ children }) {
   const [isOpen, setIsOpen] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'))
 
   function handleClickLogin() {
+    setIsLoggedIn(true)
     setIsOpen(true)
   }
 
@@ -15,7 +17,7 @@ function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ isOpen, setIsOpen, handleClickLogin, handleClickCross }}
+      value={{ isOpen, setIsOpen, handleClickLogin, handleClickCross, isLoggedIn, setIsLoggedIn }}
     >
       {children}
     </AuthContext.Provider>
