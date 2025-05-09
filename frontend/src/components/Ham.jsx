@@ -1,8 +1,16 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
-function Ham({ open }) {
+function Ham({ open, setOpen }) {
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : 'unset'
+  }, [open])
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
   return (
     <AnimatePresence mode="wait">
       {open && (
@@ -16,16 +24,24 @@ function Ham({ open }) {
           <div className="backdrop-blur-md bg-primary/60 text-2xl font-semibold uppercase text-primary-content py-10 m-6 rounded-3xl shadow-lg">
             <ul className="flex flex-col items-center gap-8">
               <li>
-                <Link to="/">Home</Link>
+                <Link to="/" onClick={handleClose}>
+                  Home
+                </Link>
               </li>
               <li>
-                <Link to="/about">About</Link>
+                <Link to="about" onClick={handleClose}>
+                  About
+                </Link>
               </li>
               <li>
-                <Link to="/contact">Contact</Link>
+                <Link to="contact" onClick={handleClose}>
+                  Contact
+                </Link>
               </li>
               <li>
-                <Link to="/events">Events</Link>
+                <Link to="eventlist" onClick={handleClose}>
+                  Events
+                </Link>
               </li>
             </ul>
           </div>

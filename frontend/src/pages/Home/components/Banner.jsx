@@ -1,6 +1,6 @@
 import React from 'react'
 import {assets} from '../../../assets/assets'
-import { FadeUp } from '../../../utility/animation'
+import { FadeLeft } from '../../../utility/animation'
 import { motion } from 'framer-motion'
 import Button from '../../../components/Button'
 
@@ -24,7 +24,7 @@ function Banner() {
         {/* Text Content */}
         <div className="text-center md:text-left space-y-6 max-w-xl mx-auto md:mx-0">
           <motion.h1
-            variants={FadeUp(0.5)}
+            variants={FadeLeft(0.5)}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: false }}
@@ -34,7 +34,7 @@ function Banner() {
           </motion.h1>
 
           <motion.p
-            variants={FadeUp(0.7)}
+            variants={FadeLeft(0.7)}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: false }}
@@ -46,7 +46,7 @@ function Banner() {
           </motion.p>
 
           <motion.p
-            variants={FadeUp(0.9)}
+            variants={FadeLeft(0.9)}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: false }}
@@ -57,7 +57,7 @@ function Banner() {
           </motion.p>
 
           <motion.div
-            variants={FadeUp(1)}
+            variants={FadeLeft(1)}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: false }}

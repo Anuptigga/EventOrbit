@@ -109,7 +109,7 @@ function Navbar() {
         </motion.div>
       </motion.nav>
       {/* Mobile Menu Section */}
-      <Ham open={open} />
+      <Ham open={open} setOpen={setOpen} />
     </>
   )
 }

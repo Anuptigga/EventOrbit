@@ -1,10 +1,11 @@
-import React from 'react'
-
-function EventItem({ event }) {
+function EventItem({ event, onClick }) {
   const { eventPoster, eventName, eventDescription } = event
 
   return (
-    <div className="relative w-full h-64 rounded-xl overflow-hidden shadow-md cursor-pointer transform transition-transform duration-300 hover:scale-105 group">
+    <div
+      onClick={() => onClick(event)}
+      className="relative w-full h-64 rounded-xl overflow-hidden shadow-md cursor-pointer transform transition-transform duration-300 hover:scale-105 group"
+    >
       <img
         src={eventPoster}
         alt={eventName}
