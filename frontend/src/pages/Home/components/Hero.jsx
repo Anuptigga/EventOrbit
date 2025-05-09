@@ -1,27 +1,87 @@
 import React from 'react'
+import Button from '../../../components/Button'
+import { VscDebugStart } from 'react-icons/vsc'
 import { assets } from '../../../assets/assets'
+import { motion } from 'framer-motion'
+import { FadeRight } from '../../../utility/animation'
 
 function Hero() {
   return (
-    <div
-      className="hero min-h-screen"
-      style={{
-        backgroundImage: `url(${assets.c_img1})`,
-      }}
-    >
-      <div className="hero-overlay"></div>
-      <div className="hero-content text-neutral-content text-center">
-        <div className="max-w-md">
-          <h1 className="mb-5 text-5xl font-bold">Hello there</h1>
-          <p className="mb-5">
-            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-            excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
-            a id nisi.
-          </p>
-          <button className="btn btn-primary">Get Started</button>
+    <section className='pt-20'>
+      <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 min-h-[650px] items-center relative">
+        <div className="flex flex-col justify-center z-10">
+          <div className="space-y-4 text-center md:text-left">
+            <motion.h1
+              variants={FadeRight(0.6)}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false }}
+              className="text-5xl lg:text-6xl font-bold leading-relaxed font-secondary"
+            >
+              Welcome to
+              <br />
+              Event <span className="text-primary">Orbit!</span>
+            </motion.h1>
+            <motion.p
+              variants={FadeRight(0.8)}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false }}
+              className="text-2xl font-medium tracking-wide"
+            >
+              Organize and manage all your college events with ease.
+            </motion.p>
+            <motion.p
+              variants={FadeRight(1.2)}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false }}
+              className="text-accent"
+            >
+              Create events, track participation, and stay updated — all in one
+              place. Empowering students to lead, manage, and make a difference
+              through events.
+            </motion.p>
+            <motion.div
+              variants={FadeRight(1.5)}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false }}
+              className="flex justify-center md:justify-start"
+            >
+              <Button className="primary-btn">
+                <VscDebugStart />
+                Get Started
+              </Button>
+            </motion.div>
+          </div>
+        </div>
+
+        <div className="hidden md:flex justify-center items-center z-10">
+          <motion.img
+            initial={{ opacity: 0, x: 200, rotate: 75 }}
+            whileInView={{ opacity: 1, x: 0, rotate: 0 }}
+            transition={{ duration: 1, delay: 0.3 }}
+            viewport={{ once: false }}
+            src={assets.moon}
+            alt="Moon Illustration"
+            className="w-[300px] md:w-[500px] drop-shadow"
+          />
+        </div>
+
+        <div className="absolute top-0 right-1/2 translate-x-1/2 md:translate-x-0  blur-sm opacity-80 rotate-[40deg]">
+          <motion.img
+            initial={{ opacity: 0, y: -200, rotate: 75 }}
+            whileInView={{ opacity: 1, y: 0, rotate: 0 }}
+            transition={{ duration: 1, delay: 1.3 }}
+            viewport={{ once: false }}
+            src={assets.star}
+            alt="Star Illustration"
+            className="w-full md:max-w-[300px]"
+          />
         </div>
       </div>
-    </div>
+    </section>
   )
 }
 

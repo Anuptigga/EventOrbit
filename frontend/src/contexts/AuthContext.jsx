@@ -31,10 +31,10 @@ function AuthProvider({ children }) {
       <AuthContext.Provider
         value={{
           isOpen,
+          isLoggedIn,
           setIsOpen,
           handleClickLogin,
           handleClickCross,
-          isLoggedIn,
           setIsLoggedIn,
           handleLogOut,
           handleLogIn,

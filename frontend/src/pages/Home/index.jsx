@@ -1,15 +1,16 @@
 import React from 'react'
-import Carousel from './components/Carousel'
 import Hero from './components/Hero'
-import Loader from '../../components/Loader'
+import Banner from './components/Banner'
 
 function index() {
   return (
-    <div className="bg-base-200">
+    <main className="overflow-hidden">
       <Hero />
-      {/* <Loader /> */}
-      {/* <Carousel /> */}
-    </div>
+      <Banner />
+      <Banner />
+      <Banner />
+      <Banner />
+    </main>
   )
 }
 

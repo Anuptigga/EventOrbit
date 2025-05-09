@@ -4,6 +4,8 @@ import c_img2 from './c_img2.jpg'
 import c_img3 from './c_img3.jpg'
 import c_img4 from './c_img4.jpg'
 import tech from './tech.png'
+import moon from './moon2.png'
+import star from './teal-star.png'
 
 export const assets = {
   cross_icon,
@@ -12,4 +14,6 @@ export const assets = {
   c_img3,
   c_img4,
   tech,
+  moon,
+  star,
 }

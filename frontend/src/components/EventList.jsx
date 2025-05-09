@@ -63,7 +63,7 @@ export default function EventList() {
 
   return (
     <>
-      <div className="max-w-6xl h-xl mx-auto p-6 space-y-6 grid gap-6 grid-cols-1">
+      <div className="max-w-6xl h-xl mx-auto p-6 pt-30 space-y-6 grid gap-6 grid-cols-1">
         {events.map((event) => (
           <EventItem key={event._id} event={event} />
         ))}

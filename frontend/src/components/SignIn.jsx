@@ -63,7 +63,7 @@ const SignIn = () => {
 
   return (
     isOpen && (
-      <div className="absolute top-0 left-0 right-0 bottom-0 z-10 backdrop-blur-sm bg-neutral/30 flex justify-center items-center">
+      <div className="absolute top-0 left-0 right-0 bottom-0 z-100 backdrop-blur-sm bg-neutral/30 flex justify-center items-center">
         <form
           className="relative bg-base-100 p-8 rounded-2xl shadow-lg w-110"
           onSubmit={handleSubmit}
