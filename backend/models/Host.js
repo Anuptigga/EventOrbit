@@ -2,9 +2,15 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 
 const hostSchema = new mongoose.Schema({
-    name: { type: String },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true }
+  name: { type: String },
+  imgURL: {
+    type: String,
+    required:true,
+    default:
+      'https://static.vecteezy.com/system/resources/previews/000/576/106/original/vector-sign-of-people-icon.jpg',
+  },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
 })
 
 const saltRounds = 10

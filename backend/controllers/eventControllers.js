@@ -11,11 +11,17 @@ export const createEvent = async (req, res) => {
       eventCategory,
       eventPoster,
     } = req.body
+    const hostId = req.currentHost._id
+    const hostName = req.currentHost.name
+    const hostImage=req.currentHost.imgURL
     const existingEvent = await Event.findOne({ eventName })
     if (existingEvent) {
       return res.status(400).json({ message: 'Event already exists' })
     }
     const event = new Event({
+      hostId,
+      hostName,
+      hostImage,
       eventName,
       eventDescription,
       eventDate,
