@@ -4,13 +4,13 @@ import generateToken from "../utils/generateToken.js";
 //signup
 export const signup = async (req, res) => {
   try {
-    const {name, email, password } = req.body
+    const {name, email, imgURL, password } = req.body
     const existingUser = await Host.findOne({ email })
     if (existingUser) {
       return res.status(400).json({ message: 'User already exists' })
     }
 
-    const host = new Host({ name, email, password })
+    const host = new Host({ name, email, password,imgURL })
     await host.save()
 
     const token= generateToken(host._id)
