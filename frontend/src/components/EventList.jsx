@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { getAllEvents } from '../services/api/event'
 import { AnimatePresence, motion } from 'framer-motion'
 
@@ -27,8 +27,8 @@ export default function EventList() {
             key={event._id}
             onClick={() => setSelectedEvent(event)}
             whileHover={{ scale: 1.02 }}
-            className={`p-4 rounded-lg shadow-md bg-white cursor-pointer transition ${
-              selectedEvent?._id === event._id ? 'ring-2 ring-primary' : ''
+            className={`p-4 rounded-lg cursor-pointer transition duration-300 hover:scale-105 ${
+              selectedEvent?._id === event._id ? 'bg-secondary text-secondary-content' : 'text-primary'
             }`}
           >
             <h2 className="text-lg font-semibold">{event.eventName}</h2>
@@ -37,7 +37,7 @@ export default function EventList() {
       </div>
 
       {/* Divider */}
-      <div className="hidden md:block w-[1px] bg-gray-300 mx-auto" />
+      <div className="hidden md:block w-[1px] bg-neutral mx-auto" />
 
       {/* Right: Detail */}
       <div className="hidden md:block">
@@ -49,7 +49,7 @@ export default function EventList() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3 }}
-              className="bg-white rounded-xl shadow p-6 space-y-4"
+              className=" rounded-lg p-6 space-y-4"
             >
               <h2 className="text-3xl font-bold">{selectedEvent.eventName}</h2>
               <img
@@ -69,7 +69,7 @@ export default function EventList() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="text-gray-400 text-xl font-semibold"
+              className="text-accent text-xl font-semibold text-center"
             >
               Select an event to view details
             </motion.div>
