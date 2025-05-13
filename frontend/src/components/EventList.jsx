@@ -71,7 +71,7 @@ export default function EventList() {
             >
               <h2 className="text-3xl font-bold">{selectedEvent.eventName}</h2>
               <img
-                src={selectedEvent.img}
+                src={selectedEvent.eventPoster}
                 alt={selectedEvent.eventName}
                 className="rounded-lg w-full max-h-[300px] object-cover"
               />

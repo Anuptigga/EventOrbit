@@ -159,7 +159,7 @@ export async function action({ request }) {
   const data = Object.fromEntries(formData)
   console.log(data)
 
-  const res = await createEvent(data)
+  const res = await createEvent(formData)
 
   // const name = data.get('name')
   // const branch = data.get('branch')
