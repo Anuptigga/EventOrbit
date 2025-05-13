@@ -3,13 +3,18 @@ import { getAllEvents } from '../services/api/event'
 import { AnimatePresence, motion } from 'framer-motion'
 import Button from './Button'
 import { useEvent } from '../hooks/useEvent'
+import { useAuth } from '../hooks/useAuth'
+import { useNavigate } from 'react-router-dom'
 
 export default function EventList() {
   const [events, setEvents] = useState([])
   const [selectedEvent, setSelectedEvent] = useState(null)
   const clickedRef = useRef(false)
 
+  const navigate = useNavigate()
+
   const { setEventOpen } = useEvent()
+  const { isLoggedIn, handleClickLogin } = useAuth()
 
   const handleClick = () => {
     if (clickedRef.current) return
@@ -50,7 +55,7 @@ export default function EventList() {
       </div>
 
       {/* Divider */}
-      <div className="hidden md:block w-[1px] bg-neutral mx-auto" />
+      <div className="hidden md:block w-[1px] h-screen bg-neutral mx-auto" />
 
       {/* Right: Detail */}
       <div className="hidden md:block">
@@ -99,6 +104,14 @@ export default function EventList() {
             </motion.div>
           )}
         </AnimatePresence>
+      </div>
+      <div>
+        <Button
+          className="fixed bottom-25 right-10 primary-btn rounded-full px-6 py-4"
+          onClick={isLoggedIn ? () => navigate('/eventform') : handleClickLogin}
+        >
+          +
+        </Button>
       </div>
     </div>
   )
