@@ -77,7 +77,12 @@ export default function EventList() {
               />
               <p>{selectedEvent.eventDescription}</p>
               <p className="text-sm text-gray-500">
-                Date: {selectedEvent.date}
+                Date :{' '}
+                {new Date(selectedEvent.eventDate).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
               </p>
               <div className="flex justify-between">
                 <Button className="primary-btn" onClick={handleClick}>

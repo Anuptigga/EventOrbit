@@ -172,6 +172,18 @@ export default function EventForm() {
             />
           </div> */}
 
+          <div className="flex flex-col space-y-1">
+            <label className="[color:oklch(21%_0.006_56.043)] font-semibold">
+              Event poster <span className="text-error">*</span>
+            </label>
+            <input
+              type="file"
+              name="eventPoster"
+              accept="image/*"
+              className="file:mr-4 file:rounded-full file:border-0 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-primary-content file:bg-primary file:cursor-pointer"
+            />
+          </div>
+
           {/* --- Category Section --- */}
           <div className="border-t [border-color:oklch(92%_0.003_48.717)] pt-6 mt-6">
             <h3 className="text-lg font-bold text-primary mb-3">

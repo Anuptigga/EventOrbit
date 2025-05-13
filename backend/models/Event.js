@@ -7,7 +7,7 @@ const eventSchema = new mongoose.Schema(
     hostImage:{type:String, required:true},
     eventName: { type: String, required: true },
     eventDescription: { type: String, required: true },
-    eventPoster: { type: String },
+    eventPoster: { type: String, required: true },
     eventDate: { type: Date, required: true },
     eventVenue: { type: String, required: true },
     eventCategory: [{ type: String }],
