@@ -4,6 +4,7 @@ import Home from './pages/Home'
 import EventForm from './components/EventForm'
 import EventList from './components/EventList'
 import PageNotFound from './components/PageNotFound'
+import { action as registerEvent } from './components/EventRegistration'
 
 const router = createBrowserRouter([
   {
@@ -12,7 +13,11 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: 'eventform', element: <EventForm /> },
-      { path: 'eventlist', element: <EventList /> },
+      {
+        path: 'eventlist',
+        element: <EventList />,
+        action: registerEvent,
+      },
       {
         path: '*',
         element: <PageNotFound />,

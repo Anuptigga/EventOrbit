@@ -89,7 +89,10 @@
 
 @layer components {
   .primary-btn {
-    @apply bg-primary text-primary-content font-semibold py-3 px-6 rounded-xl shadow-[0_8px_14px_-7px_#83c5be] hover:!scale-110 duration-300;
+    @apply bg-primary text-primary-content font-semibold py-3 px-6 rounded-xl shadow-[0_8px_14px_-7px_#83c5be] hover:!scale-105 duration-300;
+  }
+  .secondary-btn {
+    @apply bg-secondary text-secondary-content font-semibold py-3 px-6 rounded-xl shadow-[0_8px_14px_-7px_#83c5be] hover:!scale-105 duration-300;
   }
   .active {
     @apply text-accent shadow-[0_3px_0_-1px_#83c5be];

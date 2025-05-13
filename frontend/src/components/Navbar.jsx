@@ -94,7 +94,7 @@ function Navbar() {
                 </li>
               ))}
               <Button
-                className="primary-btn"
+                className={isLoggedIn ? 'secondary-btn' : 'primary-btn'}
                 onClick={isLoggedIn ? handleLogOut : handleClickLogin}
               >
                 {isLoggedIn ? 'Log Out' : 'Log In'}

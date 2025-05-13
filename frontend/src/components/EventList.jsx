@@ -1,10 +1,21 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { getAllEvents } from '../services/api/event'
 import { AnimatePresence, motion } from 'framer-motion'
+import Button from './Button'
+import { useEvent } from '../hooks/useEvent'
 
 export default function EventList() {
   const [events, setEvents] = useState([])
   const [selectedEvent, setSelectedEvent] = useState(null)
+  const clickedRef = useRef(false)
+
+  const { setEventOpen } = useEvent()
+
+  const handleClick = () => {
+    if (clickedRef.current) return
+    // clickedRef.current = true
+    setEventOpen(true)
+  }
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -28,7 +39,9 @@ export default function EventList() {
             onClick={() => setSelectedEvent(event)}
             whileHover={{ scale: 1.02 }}
             className={`p-4 rounded-lg cursor-pointer transition duration-300 hover:scale-105 ${
-              selectedEvent?._id === event._id ? 'bg-secondary text-secondary-content' : 'text-primary'
+              selectedEvent?._id === event._id
+                ? 'bg-secondary text-secondary-content'
+                : 'text-primary'
             }`}
           >
             <h2 className="text-lg font-semibold">{event.eventName}</h2>
@@ -61,6 +74,17 @@ export default function EventList() {
               <p className="text-sm text-gray-500">
                 Date: {selectedEvent.date}
               </p>
+              <div className="flex justify-between">
+                <Button className="primary-btn" onClick={handleClick}>
+                  Register
+                </Button>
+                <Button
+                  className="secondary-btn"
+                  onClick={() => setSelectedEvent(null)}
+                >
+                  Back
+                </Button>
+              </div>
             </motion.div>
           ) : (
             <motion.div

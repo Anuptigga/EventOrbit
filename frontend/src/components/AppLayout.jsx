@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom'
 import Navbar from './Navbar'
 import SignIn from './SignIn'
 import Footer from './Footer'
+import EventRegistration from './EventRegistration'
 
 function AppLayout() {
   return (
@@ -11,6 +12,7 @@ function AppLayout() {
       <ToastContainer position="top-right" autoClose={3000} />
       <Navbar />
       <SignIn />
+      <EventRegistration />
       <Outlet />
       <Footer />
     </>
