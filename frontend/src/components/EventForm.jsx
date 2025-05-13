@@ -11,7 +11,7 @@ export default function EventForm() {
     eventDescription: '',
     eventDate: '',
     eventVenue: '',
-    eventPoster: '',
+    // eventPoster: '',
     eventCategory: [], // now stores array of objects like [{ name: 'Tech' }]
   })
 
@@ -56,8 +56,8 @@ export default function EventForm() {
       !eventData.eventName ||
       !eventData.eventDescription ||
       !eventData.eventDate ||
-      !eventData.eventVenue ||
-      !eventData.eventPoster
+      !eventData.eventVenue
+      // !eventData.eventPoster
     ) {
       toast.error('🚨 Please fill all the required fields!')
       return
@@ -85,7 +85,7 @@ export default function EventForm() {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center px-4 py-8 bg-base-200"
+      className="min-h-screen flex items-center justify-center px-4 py-8 pt-30 bg-base-200"
       // style={{
       //   background: 'linear-gradient(135deg, oklch(96% 0.03 250), oklch(94% 0.04 320))',
       // }}
@@ -157,7 +157,7 @@ export default function EventForm() {
             />
           </div>
 
-          <div className="flex flex-col space-y-1">
+          {/* <div className="flex flex-col space-y-1">
             <label className="[color:oklch(21%_0.006_56.043)] font-semibold">
               Event poster <span className="text-error">*</span>
             </label>
@@ -170,7 +170,7 @@ export default function EventForm() {
               className="w-full px-4 py-2 rounded-lg [background-color:oklch(98%_0.001_106.423)] border [border-color:oklch(92%_0.003_48.717)] shadow-sm focus:[ring-color:oklch(58%_0.233_277.117)] focus:ring-2 outline-none"
               required
             />
-          </div>
+          </div> */}
 
           {/* --- Category Section --- */}
           <div className="border-t [border-color:oklch(92%_0.003_48.717)] pt-6 mt-6">
