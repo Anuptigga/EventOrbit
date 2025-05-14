@@ -1,108 +1,64 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { useEvent } from '../hooks/useEvent'
 import Button from './Button'
 import { Form, useNavigation } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { registerEvent } from '../services/api/event'
 
 function EventRegistration() {
-  const { eventOpen, setEventOpen } = useEvent()
-
-  const [formData, setFormData] = useState({
-    name: '',
-    branch: '',
-    batch: '',
-    eventCategory: '',
-    email: '',
-    phone: '',
-  })
-
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault()
-  // }
+  const { eventOpen, setEventOpen, selectedEventId } = useEvent()
 
   const formRef = useRef(null)
 
   const handleClose = () => {
     formRef.current?.reset()
     setEventOpen(false)
-    // setFormData({
-    //   name: '',
-    //   branch: '',
-    //   batch: '',
-    //   eventCategory: '',
-    //   email: '',
-    //   phone: '',
-    // })
   }
 
   useEffect(() => {
     document.body.style.overflow = eventOpen ? 'hidden' : 'unset'
   }, [eventOpen])
 
-  // const isSubmitting = navigation.state === 'submitting'
   const navigation = useNavigation()
-  // const isIdle = navigation.state === 'idle'
-
-  // useEffect(() => {
-  //   // When submission just finished
-  //   if (isIdle && formRef.current) {
-  //     const form = formRef.current
-
-  //     // ✅ Check if the last submission was via this form
-  //     if (form.dataset.submitted === 'true') {
-  //       toast.success('Event registration successful!')
-  //       form.reset() // native form reset
-  //       setEventOpen(false)
-  //       form.dataset.submitted = 'false' // reset flag
-  //     }
-  //   }
-  // }, [isIdle])
-
-  // const handleSubmit = () => {
-  //   if (formRef.current) {
-  //     formRef.current.dataset.submitted = 'true'
-  //   }
-  // }
 
   useEffect(() => {
-    console.log(navigation.state)
-
     if (navigation.state === 'submitting') {
+      toast.info('Submitting your registration...')
+    }
+    if (
+      navigation.state === 'idle' &&
+      formRef.current?.dataset.submitted === 'true'
+    ) {
+      toast.success('Event registration successful!')
       formRef.current?.reset()
       setEventOpen(false)
-      toast.success('Event registration successful!')
+      formRef.current.dataset.submitted = 'false' 
     }
-  }, [navigation.state, formRef, setEventOpen])
+  }, [navigation.state, setEventOpen])
 
   return (
     eventOpen && (
-      <div className="absolute top-0 left-0 right-0 bottom-0 z-100 backdrop-blur-sm bg-neutral/30 flex justify-center items-center">
+      <div className="fixed inset-0 z-[100] backdrop-blur-sm bg-neutral/30 flex justify-center items-center">
         <Form
           ref={formRef}
           method="POST"
           action="/eventlist"
-          className="relative bg-base-100 p-8 rounded-2xl shadow-lg w-110 max-w-md"
-          // onSubmit={handleSubmit}
+          className="relative bg-base-100 p-8 rounded-2xl shadow-lg w-full max-w-md"
+          onSubmit={() => (formRef.current.dataset.submitted = 'true')}
         >
           <h2 className="text-2xl font-bold text-center mb-6">
             Register to Event
           </h2>
 
           <div className="space-y-4 mb-6">
+            <input type="hidden" name="eventId" value={selectedEventId} />
             <input
               type="text"
               name="name"
               placeholder="Full Name"
               required
               className="w-full outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-accent 
-            rounded-lg p-2 px-6"
-              // value={formData.name}
-              // onChange={handleChange}
+              rounded-lg p-2 px-6"
             />
             <input
               type="text"
@@ -110,9 +66,7 @@ function EventRegistration() {
               placeholder="Branch"
               required
               className="w-full outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-accent 
-            rounded-lg p-2 px-6"
-              // value={formData.branch}
-              // onChange={handleChange}
+              rounded-lg p-2 px-6"
             />
             <input
               type="number"
@@ -120,16 +74,12 @@ function EventRegistration() {
               placeholder="Batch (Year)"
               required
               className="w-full appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-accent 
-            rounded-lg p-2 px-6"
-              // value={formData.batch}
-              // onChange={handleChange}
+              rounded-lg p-2 px-6"
             />
             <select
               name="eventCategory"
               className="w-full outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-accent 
-            rounded-lg p-2 px-6"
-              // value={formData.eventCategory}
-              // onChange={handleChange}
+              rounded-lg p-2 px-6"
             >
               <option value="" disabled>
                 Select Category (optional)
@@ -145,9 +95,7 @@ function EventRegistration() {
               placeholder="Email Address"
               required
               className="w-full outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-accent 
-            rounded-lg p-2 px-6"
-              // value={formData.email}
-              // onChange={handleChange}
+              rounded-lg p-2 px-6"
             />
             <input
               type="tel"
@@ -155,9 +103,7 @@ function EventRegistration() {
               placeholder="Phone Number"
               required
               className="w-full outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-accent 
-            rounded-lg p-2 px-6"
-              // value={formData.phone}
-              // onChange={handleChange}
+              rounded-lg p-2 px-6"
             />
           </div>
 
@@ -179,39 +125,19 @@ function EventRegistration() {
   )
 }
 
-async function registerEvent(formData) {
-  try {
-    const res = await fetch('http://localhost:3000/registration', {
-      method: 'POST',
-      body: JSON.stringify(formData),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-
-    if (!res.ok) throw Error()
-    const { data } = await res.json()
-    return data
-  } catch {
-    throw Error('Failed creating your order')
-  }
-}
-
 export async function action({ request }) {
-  const formData = await request.formData()
-  const data = Object.fromEntries(formData)
-  console.log(data)
+  try {
+    const formData = await request.formData()
+    const data = Object.fromEntries(formData)
+    console.log(data)
+    const id = data.eventId
 
-  const res = await registerEvent(data)
-
-  // const name = data.get('name')
-  // const branch = data.get('branch')
-  // const batch = data.get('batch')
-  // const eventCategory = data.get('eventCategory')
-  // const email = data.get('email')
-  // const phone = data.get('phone')
-  // return { name, branch, batch, eventCategory, email, phone }
-  return res
+    await registerEvent(id, formData)
+    return { success: 'Event registered successfully!' }
+  } catch (err) {
+    console.error('Error registering event:', err)
+    return { error: 'Failed to register event. Please try again.' }
+  }
 }
 
 export default EventRegistration

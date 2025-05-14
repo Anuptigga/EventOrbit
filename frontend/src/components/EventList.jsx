@@ -13,13 +13,14 @@ export default function EventList() {
 
   const navigate = useNavigate()
 
-  const { setEventOpen } = useEvent()
+  const { setEventOpen, setSelectedEventId } = useEvent()
   const { isLoggedIn, handleClickLogin } = useAuth()
 
   const handleClick = () => {
     if (clickedRef.current) return
     // clickedRef.current = true
     setEventOpen(true)
+    setSelectedEventId(selectedEvent._id)
   }
 
   useEffect(() => {
@@ -35,7 +36,7 @@ export default function EventList() {
   }, [])
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-[1fr_1px_2fr] max-w-6xl mx-auto p-6 pt-30 min-h-screen gap-6">
+    <div className="bg-base-200 grid grid-cols-1 md:grid-cols-[1fr_1px_2fr] w-full px-20 pt-30 min-h-screen gap-6">
       {/* Left: List */}
       <div className="space-y-4">
         {events.map((event) => (
@@ -45,7 +46,7 @@ export default function EventList() {
             whileHover={{ scale: 1.02 }}
             className={`p-4 rounded-lg cursor-pointer transition duration-300 hover:scale-105 ${
               selectedEvent?._id === event._id
-                ? 'bg-secondary text-secondary-content'
+                ? 'bg-secondary border-l-4 border-primary text-secondary-content'
                 : 'text-primary'
             }`}
           >
@@ -73,7 +74,7 @@ export default function EventList() {
               <img
                 src={selectedEvent.eventPoster}
                 alt={selectedEvent.eventName}
-                className="rounded-lg w-full max-h-[300px] object-cover"
+                className="rounded-lg w-full object-cover"
               />
               <p>{selectedEvent.eventDescription}</p>
               <p className="text-sm text-gray-500">
@@ -112,7 +113,7 @@ export default function EventList() {
       </div>
       <div>
         <Button
-          className="fixed bottom-25 right-10 primary-btn rounded-full px-6 py-4"
+          className="fixed bottom-25 right-5 primary-btn rounded-full px-6 py-4"
           onClick={isLoggedIn ? () => navigate('/eventform') : handleClickLogin}
         >
           +

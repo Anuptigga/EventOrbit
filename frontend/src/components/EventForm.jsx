@@ -1,12 +1,15 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import { Form, useNavigate } from 'react-router-dom'
+import { Form, useActionData, useNavigation } from 'react-router-dom'
 import { createEvent } from '../services/api/event'
 
 function EventForm() {
   const [newCategory, setNewCategory] = useState('')
   const [eventCategory, setEventCategory] = useState([])
-  const navigate = useNavigate()
+
+  const actionData = useActionData()
+  const navigation = useNavigation()
+  const [hasSubmitted, setHasSubmitted] = useState(false)
 
   const handleAddCategory = () => {
     const trimmed = newCategory.trim()
@@ -23,6 +26,22 @@ function EventForm() {
     setEventCategory(eventCategory.filter((_, i) => i !== index))
   }
 
+  useEffect(() => {
+    if (navigation.state === 'submitting') {
+      setHasSubmitted(true)
+      toast.dismiss()
+      toast.loading('Creating Event...', { toastId: 'event-toast' })
+    } else if (navigation.state === 'idle' && hasSubmitted) {
+      toast.dismiss()
+      if (actionData?.success) {
+        toast.success(actionData.success, { toastId: 'event-toast' })
+      } else if (actionData?.error) {
+        toast.error(actionData.error, { toastId: 'event-toast' })
+      }
+      setHasSubmitted(false)
+    }
+  }, [navigation.state, actionData])
+
   return (
     <div className="min-h-screen flex items-center justify-center px-4 py-8 pt-30 bg-base-200">
       <div className="w-full max-w-4xl bg-base-100 p-10 rounded-3xl shadow-2xl">
@@ -30,7 +49,12 @@ function EventForm() {
           Create New Event
         </h2>
 
-        <Form method="post" encType="multipart/form-data" className="space-y-6" action='/eventform'>
+        <Form
+          method="post"
+          encType="multipart/form-data"
+          className="space-y-6"
+          action="/eventform"
+        >
           <input
             type="hidden"
             name="eventCategory"
@@ -155,20 +179,17 @@ function EventForm() {
 }
 
 export async function action({ request }) {
-  const formData = await request.formData()
-  const data = Object.fromEntries(formData)
-  console.log(data)
+  try {
+    const formData = await request.formData()
+    const data = Object.fromEntries(formData)
+    console.log(data)
 
-  const res = await createEvent(formData)
-
-  // const name = data.get('name')
-  // const branch = data.get('branch')
-  // const batch = data.get('batch')
-  // const eventCategory = data.get('eventCategory')
-  // const email = data.get('email')
-  // const phone = data.get('phone')
-  // return { name, branch, batch, eventCategory, email, phone }
-  return res
+    await createEvent(formData)
+    return { success: 'Event created successfully!' }
+  } catch (err) {
+    console.error('Error creating event:', err)
+    return { error: 'Failed to create event. Please try again.' }
+  }
 }
 
 export default EventForm
