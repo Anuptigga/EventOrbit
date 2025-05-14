@@ -29,14 +29,24 @@ function EventForm() {
   useEffect(() => {
     if (navigation.state === 'submitting') {
       setHasSubmitted(true)
-      toast.dismiss()
       toast.loading('Creating Event...', { toastId: 'event-toast' })
-    } else if (navigation.state === 'idle' && hasSubmitted) {
-      toast.dismiss()
-      if (actionData?.success) {
-        toast.success(actionData.success, { toastId: 'event-toast' })
-      } else if (actionData?.error) {
-        toast.error(actionData.error, { toastId: 'event-toast' })
+    }
+
+    if (navigation.state === 'idle' && hasSubmitted && actionData) {
+      if (actionData.success) {
+        toast.update('event-toast', {
+          render: actionData.success,
+          type: 'success',
+          isLoading: false,
+          autoClose: 3000,
+        })
+      } else if (actionData.error) {
+        toast.update('event-toast', {
+          render: actionData.error,
+          type: 'error',
+          isLoading: false,
+          autoClose: 3000,
+        })
       }
       setHasSubmitted(false)
     }
@@ -157,7 +167,7 @@ function EventForm() {
                   <button
                     type="button"
                     onClick={() => handleRemoveCategory(idx)}
-                    className="text-red-600"
+                    className="text-primary font-bold"
                   >
                     ✕
                   </button>
