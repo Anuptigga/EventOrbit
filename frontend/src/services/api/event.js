@@ -2,9 +2,7 @@ import axios from './axios'
 
 export const createEvent = async (eventData) => {
   try {
-    const response = await axios.post('/event/createEvent', eventData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    })
+    const response = await axios.post('/event/createEvent', eventData)
     return response.data
   } catch (err) {
     console.error('Failed to create event:', err)

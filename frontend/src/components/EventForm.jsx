@@ -191,8 +191,11 @@ function EventForm() {
 export async function action({ request }) {
   try {
     const formData = await request.formData()
-    const data = Object.fromEntries(formData)
-    console.log(data)
+    // const data = Object.fromEntries(formData)
+    // console.log(data)
+    for (let pair of formData.entries()) {
+      console.log(pair[0] + ':', pair[1])
+    }
 
     await createEvent(formData)
     return { success: 'Event created successfully!' }
