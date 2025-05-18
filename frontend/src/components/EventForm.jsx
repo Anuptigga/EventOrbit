@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import { Form, useActionData, useNavigation } from 'react-router-dom'
+import {
+  Form,
+  useActionData,
+  useNavigate,
+  useNavigation,
+} from 'react-router-dom'
 import { createEvent } from '../services/api/event'
 
 function EventForm() {
@@ -9,6 +14,7 @@ function EventForm() {
 
   const actionData = useActionData()
   const navigation = useNavigation()
+  const navigate = useNavigate()
   const [hasSubmitted, setHasSubmitted] = useState(false)
 
   const handleAddCategory = () => {
@@ -40,6 +46,9 @@ function EventForm() {
           isLoading: false,
           autoClose: 3000,
         })
+        setTimeout(() => {
+          navigate('/eventlist')
+        }, 3500)
       } else if (actionData.error) {
         toast.update('event-toast', {
           render: actionData.error,
