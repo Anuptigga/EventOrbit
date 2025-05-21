@@ -22,11 +22,7 @@ export const getAllEvents = async () => {
 
 export const registerEvent = async (eventId, userData) => {
   try {
-    const response = await axios.post(`/register/${eventId}`, userData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
+    const response = await axios.post(`/participant/register/${eventId}`, userData)
     return response.data
   } catch (err) {
     console.error('Failed to register event:', err)

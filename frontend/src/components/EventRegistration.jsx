@@ -132,7 +132,7 @@ export async function action({ request }) {
     console.log(data)
     const id = data.eventId
 
-    await registerEvent(id, formData)
+    await registerEvent(id, data)
     return { success: 'Event registered successfully!' }
   } catch (err) {
     console.error('Error registering event:', err)
