@@ -29,6 +29,10 @@ export const register= async(req, res)=>{
 export const getParticipants =async (req,res) => {
     try {
         const {eventId} =req.params
+        const event=await Event.findById(eventId)
+        if(event.hostId.toString() !== req.currentHost._id.toString()){
+            return res.status(403).json({message:"You are not the host of the event"})
+        }
         const participant = await Participant.find({ eventId: eventId })
         if(!participant || participant.length===0){
             res.status(404).json({message:"no participants"})
