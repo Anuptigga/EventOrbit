@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
 import Host from "../models/Host.js";
-const JWT_SECRET = 'secret-key'
 export const authenticated =async(req,res,next)=>{
     let token;
     if (
@@ -9,7 +8,7 @@ export const authenticated =async(req,res,next)=>{
       ) {
         try {
           token = req.headers.authorization.split(" ")[1];
-          const decoded = jwt.verify(token,JWT_SECRET);
+          const decoded = jwt.verify(token, process.env.JWT_SECRET)
           const host = await Host.findById(decoded.id).select('-password')
 
           if (!host) {

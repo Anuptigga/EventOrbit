@@ -6,7 +6,7 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: 'eventorbit',
-    allowed_format: ['jpeg', 'jpg', 'png'],
+    allowed_formats: ['jpeg', 'jpg', 'png'],
     transformation: [
       { quality: 'auto' },
       { fetch_format: 'auto' },

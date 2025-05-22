@@ -13,7 +13,7 @@ const hostSchema = new mongoose.Schema({
   password: { type: String, required: true },
 })
 
-const saltRounds = 10
+const saltRounds = Number(process.env.SALT_ROUNDS)
 //hash password
 hostSchema.pre('save', async function(next) {
   if (!this.isModified('password')) return next()
