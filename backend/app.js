@@ -5,6 +5,7 @@ import authRoute from "./routes/authRoute.js"
 import eventRoute from "./routes/eventRoute.js"
 import participantRoute from "./routes/participantRoute.js"
 import emailRoute from "./routes/emailRoute.js"
+import studentUploadRoute from "./routes/studentUploadRoute.js"
 
 import cors from "cors"
 
@@ -22,6 +23,7 @@ app.use('/api/auth', authRoute)
 app.use('/api/event',eventRoute)
 app.use('/api/participant',participantRoute)
 app.use('/api/email',emailRoute)
+app.use('/api/student',studentUploadRoute)
 app.get('/', (req, res) => {
     res.send("server working!");
 })
