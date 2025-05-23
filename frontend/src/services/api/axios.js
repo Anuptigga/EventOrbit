@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const URL = 'https://eventorbit.onrender.com/api' || 'http://localhost:8000/api'
+const URL = 'http://localhost:8000/api'
+// const URL = 'https://eventorbit.onrender.com/api' || 'http://localhost:8000/api'
 
 const instance = axios.create({
   baseURL: URL,
@@ -8,7 +9,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token') // or sessionStorage
+    const token = localStorage.getItem('token')
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }

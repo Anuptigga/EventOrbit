@@ -1,5 +1,6 @@
 import Host from "../models/Host.js"
-import generateToken from "../utils/generateToken.js";
+import generateToken from "../utils/generateToken.js"
+import {OAuth2Client} from 'google-auth-library'
 
 //signup
 export const signup = async (req, res) => {
@@ -39,5 +40,37 @@ export const login= async(req,res)=>{
 
   } catch (error) {
     res.status(500).json({message:"Error logging in",error});
+  }
+}
+
+//Google Login
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
+export const googleLogin= async(req,res)=>{
+  try {
+    const {token}=req.body
+    const ticket=await client.verifyIdToken({
+      idToken:token,
+      audience:process.env.GOOGLE_CLIENT_ID,
+    })
+    const payload=ticket.getPayload()
+    const {email,name,picture}=payload
+
+    let host= await Host.findOne({email})
+    if(!host){
+      const randomPassword=Math.random().toString(36).slice(-8)
+      host =new Host({
+        name,
+        email,
+        password: randomPassword,
+        imgURL:picture,
+      })
+      await host.save()
+    }
+    const appToken=generateToken(host._id)
+    res.status(200).json({message:"Google login successful",token:appToken})
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: 'Google login failed', error: error.message })
   }
 }

@@ -28,3 +28,16 @@ export const signup = async (name, email, password) => {
     throw error
   }
 }
+
+//google login
+export const googleLogin= async(googleToken)=>{
+  try {
+    const response= await axios.post('/auth/google',{token:googleToken})
+    const {token}=response.data
+    localStorage.setItem('token',token)
+    return response.data
+  } catch (error) {
+    console.error('Google login failed:',error.response?.data|| error.message)
+    throw error
+  }
+}

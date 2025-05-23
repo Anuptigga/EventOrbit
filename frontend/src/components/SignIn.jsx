@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { FcGoogle } from 'react-icons/fc'
 import { FaGithub } from 'react-icons/fa'
 import { assets } from '../assets/assets'
-import { login, signup } from '../services/api/auth'
-// import { useNavigate } from 'react-router-dom'
+import { login, signup, googleLogin } from '../services/api/auth'
+import { GoogleLogin } from '@react-oauth/google'
 import { useAuth } from '../hooks/useAuth'
 
 const SignIn = () => {
   const { setIsOpen } = useAuth()
-  // const navigate = useNavigate()
-
   const { isOpen, handleClickCross, handleLogIn } = useAuth()
-  // console.log(isOpen)
 
   const [state, setState] = useState('Login')
 
@@ -43,7 +39,6 @@ const SignIn = () => {
         response = await login(formData.email, formData.password)
         handleLogIn()
         setIsOpen(false)
-        // navigate('/')
       } else {
         response = await signup(
           formData.name,
@@ -52,12 +47,24 @@ const SignIn = () => {
         )
         toast.success('Signup successful!')
         setIsOpen(false)
-        // navigate('/')
       }
       console.log('Auth successful:', response)
     } catch (error) {
       console.log(error)
       toast.error('Something went wrong. Please try again.')
+    }
+  }
+
+  const handleGoogleLogin = async (credentialResponse) => {
+    try {
+      const { credential } = credentialResponse
+      await googleLogin(credential)
+      handleLogIn()
+      setIsOpen(false)
+      toast.success('Google login successful!')
+    } catch (error) {
+      toast.error('Google login failed')
+      console.error(error)
     }
   }
 
@@ -72,10 +79,7 @@ const SignIn = () => {
             src={assets.cross_icon}
             alt="Cross Icon"
             className="absolute top-5 right-5 cursor-pointer"
-            onClick={
-              handleClickCross
-              // navigate(-1)
-            }
+            onClick={handleClickCross}
           />
           <h2 className="text-2xl font-bold text-center mb-6">{state}</h2>
           {state === 'Sign Up' && (
@@ -140,9 +144,13 @@ const SignIn = () => {
           </button>
           <div className="divider mb-6">Or continue with</div>
           <div className="flex justify-between w-1/2">
-            <button className="btn btn-outline w-full mr-2 flex items-center">
-              <FcGoogle /> Google
-            </button>
+            <GoogleLogin
+              onSuccess={handleGoogleLogin}
+              onError={() => toast.error('Google login failed')}
+              width="100"
+              shape="circle"
+              logo_alignment="center"
+            />
             <button className="btn btn-outline w-full ml-2 flex items-center">
               <FaGithub /> GitHub
             </button>
@@ -171,6 +179,7 @@ const SignIn = () => {
             </p>
           )}
         </form>
+        <ToastContainer />
       </div>
     )
   )
