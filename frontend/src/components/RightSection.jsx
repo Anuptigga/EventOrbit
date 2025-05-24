@@ -3,22 +3,64 @@ import Button from './Button'
 import { getParticipants } from '../services/api/participant'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import { sendEmail } from '../services/api/email'
+import { jwtDecode } from 'jwt-decode'
 
 function RightSection({ selectedEvent, setSelectedEvent, handleClick }) {
   const [participants, setParticipants] = useState([])
+  const [recipients, setRecipients] = useState([])
+  const [flag, setFlag] = useState(false)
 
-  const handleParticipants = async () => {
+  const handleViewParticipants = async () => {
+    const token = localStorage.getItem('token')
+    let currentUser
+    if (token) {
+      currentUser = jwtDecode(token)
+    } else {
+      return toast.error('You are not logged in')
+    }
+    const isHost = selectedEvent?.hostId === currentUser.id
+    const hasParticipants = participants.length > 0
+    if (!isHost) return toast.error('You are not the host of this event')
+    if (!hasParticipants) return toast.error('No participants found')
+    setFlag((prev) => !prev)
+  }
+
+  const handleNotify = async () => {
     try {
-      const res = await getParticipants(selectedEvent._id)
-      setParticipants(res.participant)
+      const res = await sendEmail(selectedEvent._id, recipients)
+      console.log(res)
+      return toast.success(res.message)
     } catch (err) {
-      return toast.error('Your are not the host of this event')
+      return toast.error('You are not the host of this event')
     }
   }
 
   useEffect(() => {
-    setParticipants([])
+    if (!selectedEvent) return
+    const fetchParticipants = async () => {
+      try {
+        const res = await getParticipants(selectedEvent._id)
+        setParticipants(res.participant || [])
+      } catch (error) {
+        console.error('Error fetching participants:', error)
+      }
+    }
+
+    fetchParticipants()
   }, [selectedEvent])
+
+  useEffect(() => {
+    if (participants.length && selectedEvent) {
+      const allRecipients = participants.map((participant) => ({
+        to: participant.email,
+        subject: `Invitation to ${selectedEvent.eventName}`,
+        text: `You are invited to ${selectedEvent.eventName}`,
+        html: `You are invited to ${selectedEvent.eventName}`,
+      }))
+      setRecipients(allRecipients)
+    }
+  }, [participants, selectedEvent])
 
   return (
     <motion.div
@@ -56,38 +98,45 @@ function RightSection({ selectedEvent, setSelectedEvent, handleClick }) {
         </Button>
       </div>
       <div>
-        <Button className="secondary-btn" onClick={handleParticipants}>
-          View Participants
-        </Button>
-
-        <div className="mt-4 space-y-4">
-          {participants.length !== 0 &&
-            participants.map((p, index) => (
-              <div
-                key={p._id || index}
-                className="border p-4 rounded-lg shadow"
-              >
-                <p>
-                  <strong>Name:</strong> {p.name}
-                </p>
-                <p>
-                  <strong>Email:</strong> {p.email}
-                </p>
-                <p>
-                  <strong>Branch:</strong> {p.branch}
-                </p>
-                <p>
-                  <strong>Batch:</strong> {p.batch}
-                </p>
-                <p>
-                  <strong>Phone:</strong> {p.phone}
-                </p>
-                <p>
-                  <strong>Event Category:</strong> {p.eventCategory}
-                </p>
-              </div>
-            ))}
+        <div className="flex gap-2">
+          <Button className="secondary-btn" onClick={handleViewParticipants}>
+            {flag ? 'Hide' : 'View'} Participants
+          </Button>
+          <Button className="primary-btn" onClick={handleNotify}>
+            Notify Participants
+          </Button>
         </div>
+
+        {flag && (
+          <div className="mt-4 space-y-4">
+            {participants.length !== 0 &&
+              participants.map((p, index) => (
+                <div
+                  key={p._id || index}
+                  className="border p-4 rounded-lg shadow"
+                >
+                  <p>
+                    <strong>Name:</strong> {p.name}
+                  </p>
+                  <p>
+                    <strong>Email:</strong> {p.email}
+                  </p>
+                  <p>
+                    <strong>Branch:</strong> {p.branch}
+                  </p>
+                  <p>
+                    <strong>Batch:</strong> {p.batch}
+                  </p>
+                  <p>
+                    <strong>Phone:</strong> {p.phone}
+                  </p>
+                  <p>
+                    <strong>Event Category:</strong> {p.eventCategory}
+                  </p>
+                </div>
+              ))}
+          </div>
+        )}
       </div>
     </motion.div>
   )

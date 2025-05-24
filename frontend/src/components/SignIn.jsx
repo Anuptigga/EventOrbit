@@ -48,9 +48,7 @@ const SignIn = () => {
         toast.success('Signup successful!')
         setIsOpen(false)
       }
-      console.log('Auth successful:', response)
     } catch (error) {
-      console.log(error)
       toast.error('Something went wrong. Please try again.')
     }
   }
@@ -64,7 +62,6 @@ const SignIn = () => {
       toast.success('Google login successful!')
     } catch (error) {
       toast.error('Google login failed')
-      console.error(error)
     }
   }
 
