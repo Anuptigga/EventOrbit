@@ -1,15 +1,25 @@
 import { motion } from 'framer-motion'
 import Button from './Button'
 import { getParticipants } from '../services/api/participant'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 function RightSection({ selectedEvent, setSelectedEvent, handleClick }) {
   const [participants, setParticipants] = useState([])
 
   const handleParticipants = async () => {
-    const res = await getParticipants(selectedEvent._id)
-    setParticipants(res.participant)
+    try {
+      const res = await getParticipants(selectedEvent._id)
+      setParticipants(res.participant)
+    } catch (err) {
+      return toast.error('Your are not the host of this event')
+    }
   }
+
+  useEffect(() => {
+    setParticipants([])
+  }, [selectedEvent])
+
   return (
     <motion.div
       key={selectedEvent._id}
