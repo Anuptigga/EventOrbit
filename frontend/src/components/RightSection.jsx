@@ -10,18 +10,11 @@ function RightSection({ selectedEvent, setSelectedEvent, handleClick }) {
   const [participants, setParticipants] = useState([])
   const [recipients, setRecipients] = useState([])
   const [flag, setFlag] = useState(false)
+  const [currentUser, setCurrentUser] = useState(null)
 
   const handleViewParticipants = async () => {
-    const token = localStorage.getItem('token')
-    let currentUser
-    if (token) {
-      currentUser = jwtDecode(token)
-    } else {
-      return toast.error('You are not logged in')
-    }
-    const isHost = selectedEvent?.hostId === currentUser.id
+    if (!currentUser) return toast.error('You are not logged in')
     const hasParticipants = participants.length > 0
-    if (!isHost) return toast.error('You are not the host of this event')
     if (!hasParticipants) return toast.error('No participants found')
     setFlag((prev) => !prev)
   }
@@ -32,9 +25,16 @@ function RightSection({ selectedEvent, setSelectedEvent, handleClick }) {
       console.log(res)
       return toast.success(res.message)
     } catch (err) {
-      return toast.error('You are not the host of this event')
+      return toast.error(err.message)
     }
   }
+
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      setCurrentUser(jwtDecode(token))
+    }
+  }, [])
 
   useEffect(() => {
     if (!selectedEvent) return
@@ -97,47 +97,49 @@ function RightSection({ selectedEvent, setSelectedEvent, handleClick }) {
           Back
         </Button>
       </div>
-      <div>
-        <div className="flex gap-2">
-          <Button className="secondary-btn" onClick={handleViewParticipants}>
-            {flag ? 'Hide' : 'View'} Participants
-          </Button>
-          <Button className="primary-btn" onClick={handleNotify}>
-            Notify Participants
-          </Button>
-        </div>
-
-        {flag && (
-          <div className="mt-4 space-y-4">
-            {participants.length !== 0 &&
-              participants.map((p, index) => (
-                <div
-                  key={p._id || index}
-                  className="border p-4 rounded-lg shadow"
-                >
-                  <p>
-                    <strong>Name:</strong> {p.name}
-                  </p>
-                  <p>
-                    <strong>Email:</strong> {p.email}
-                  </p>
-                  <p>
-                    <strong>Branch:</strong> {p.branch}
-                  </p>
-                  <p>
-                    <strong>Batch:</strong> {p.batch}
-                  </p>
-                  <p>
-                    <strong>Phone:</strong> {p.phone}
-                  </p>
-                  <p>
-                    <strong>Event Category:</strong> {p.eventCategory}
-                  </p>
-                </div>
-              ))}
+      {selectedEvent?.hostId === currentUser?.id && (
+        <div>
+          <div className="flex justify-between">
+            <Button className="secondary-btn" onClick={handleViewParticipants}>
+              {flag ? 'Hide' : 'View'} Participants
+            </Button>
+            <Button className="primary-btn" onClick={handleNotify}>
+              Notify Participants
+            </Button>
           </div>
-        )}
-      </div>
+
+          {flag && (
+            <div className="mt-4 space-y-4">
+              {participants.length !== 0 &&
+                participants.map((p, index) => (
+                  <div
+                    key={p._id || index}
+                    className="border p-4 rounded-lg shadow"
+                  >
+                    <p>
+                      <strong>Name:</strong> {p.name}
+                    </p>
+                    <p>
+                      <strong>Email:</strong> {p.email}
+                    </p>
+                    <p>
+                      <strong>Branch:</strong> {p.branch}
+                    </p>
+                    <p>
+                      <strong>Batch:</strong> {p.batch}
+                    </p>
+                    <p>
+                      <strong>Phone:</strong> {p.phone}
+                    </p>
+                    <p>
+                      <strong>Event Category:</strong> {p.eventCategory}
+                    </p>
+                  </div>
+                ))}
+            </div>
+          )}
+        </div>
+      )}
     </motion.div>
   )
 }
