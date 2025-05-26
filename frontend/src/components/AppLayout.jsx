@@ -5,10 +5,12 @@ import Navbar from './Navbar'
 import SignIn from './SignIn'
 import Footer from './Footer'
 import EventRegistration from './EventRegistration'
+import ScrollToTop from './ScrollToTop'
 
 function AppLayout() {
   return (
     <>
+      <ScrollToTop />
       <ToastContainer position="top-right" autoClose={3000} />
       <Navbar />
       <SignIn />

@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion'
-import Button from './Button'
-import { getParticipants } from '../services/api/participant'
+import { getParticipants } from '../../../services/api/participant'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import { sendEmail } from '../services/api/email'
+import { sendEmail } from '../../../services/api/email'
 import { jwtDecode } from 'jwt-decode'
+import { Button } from '@/components/ui/button'
 
 function RightSection({ selectedEvent, setSelectedEvent, handleClick }) {
   const [participants, setParticipants] = useState([])
@@ -71,7 +71,7 @@ function RightSection({ selectedEvent, setSelectedEvent, handleClick }) {
       transition={{ duration: 0.3 }}
       className=" rounded-lg p-6 space-y-4"
     >
-      <h2 className="text-3xl font-bold">{selectedEvent.eventName}</h2>
+      <h2 className="text-3xl font-bold text-primary">{selectedEvent.eventName}</h2>
       <img
         src={selectedEvent.eventPoster}
         alt={selectedEvent.eventName}
@@ -87,7 +87,7 @@ function RightSection({ selectedEvent, setSelectedEvent, handleClick }) {
         })}
       </p>
       <div className="flex justify-between">
-        <Button className="btn btn-primary" onClick={handleClick}>
+        <Button className="bg-primary text-primary-foreground" onClick={handleClick}>
           Register
         </Button>
         <Button
@@ -100,7 +100,10 @@ function RightSection({ selectedEvent, setSelectedEvent, handleClick }) {
       {selectedEvent?.hostId === currentUser?.id && (
         <div>
           <div className="flex justify-between">
-            <Button className="btn btn-primary" onClick={handleViewParticipants}>
+            <Button
+              className="btn btn-primary"
+              onClick={handleViewParticipants}
+            >
               {flag ? 'Hide' : 'View'} Participants
             </Button>
             <Button className="btn btn-primary" onClick={handleNotify}>

@@ -1,10 +1,11 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import AppLayout from './components/AppLayout'
 import Home from './pages/Home'
-import EventForm, { action as createEvent } from './components/EventForm'
-import EventList from './components/EventList'
-import PageNotFound from './components/PageNotFound'
-import { action as registerEvent } from './components/EventRegistration'
+import Eventform from './pages/Eventform'
+import { action as createEvent } from './pages/Eventform/functions/createEventAction'
+import EventList from './pages/Eventlist'
+import { action as registerEvent } from './pages/Eventlist/functions/registerEventAction'
+import Error from './pages/Error'
 
 const router = createBrowserRouter([
   {
@@ -14,7 +15,7 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       {
         path: 'eventform',
-        element: <EventForm />,
+        element: <Eventform />,
         action: createEvent,
       },
       {
@@ -24,7 +25,7 @@ const router = createBrowserRouter([
       },
       {
         path: '*',
-        element: <PageNotFound />,
+        element: <Error />,
       },
     ],
   },

@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
-import { getAllEvents } from '../services/api/event'
+import { getAllEvents } from '../../services/api/event'
 import { AnimatePresence, motion } from 'framer-motion'
-import Button from './Button'
-import { useEvent } from '../hooks/useEvent'
-import { useAuth } from '../hooks/useAuth'
+import { Button } from '@/components/ui/button'
+import { useEvent } from '../../hooks/useEvent'
+import { useAuth } from '../../hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
-import RightSection from './RightSection'
-import LeftSection from './LeftSection'
+import RightSection from './components/RightSection'
+import LeftSection from './components/LeftSection'
+import { Plus } from 'lucide-react'
 
 export default function EventList() {
   const [events, setEvents] = useState([])
@@ -20,7 +21,6 @@ export default function EventList() {
 
   const handleClick = () => {
     if (clickedRef.current) return
-    // clickedRef.current = true
     setEventOpen(true)
     setSelectedEventId(selectedEvent._id)
   }
@@ -101,11 +101,10 @@ export default function EventList() {
       </div>
 
       <Button
-        className="fixed bottom-25 right-10 btn btn-primary rounded-full tooltip"
-        data-tip="Create Event"
+        className="fixed bottom-25 right-10 rounded-full w-12 h-12"
         onClick={isLoggedIn ? () => navigate('/eventform') : handleClickLogin}
       >
-        +
+        <Plus />
       </Button>
     </div>
   )

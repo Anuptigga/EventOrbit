@@ -3,7 +3,6 @@ import { useEvent } from '../hooks/useEvent'
 import Button from './Button'
 import { Form, useNavigation } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { registerEvent } from '../services/api/event'
 
 function EventRegistration() {
   const { eventOpen, setEventOpen, selectedEventId } = useEvent()
@@ -32,7 +31,7 @@ function EventRegistration() {
       toast.success('Event registration successful!')
       formRef.current?.reset()
       setEventOpen(false)
-      formRef.current.dataset.submitted = 'false' 
+      formRef.current.dataset.submitted = 'false'
     }
   }, [navigation.state, setEventOpen])
 
@@ -123,21 +122,6 @@ function EventRegistration() {
       </div>
     )
   )
-}
-
-export async function action({ request }) {
-  try {
-    const formData = await request.formData()
-    const data = Object.fromEntries(formData)
-    console.log(data)
-    const id = data.eventId
-
-    await registerEvent(id, data)
-    return { success: 'Event registered successfully!' }
-  } catch (err) {
-    console.error('Error registering event:', err)
-    return { error: 'Failed to register event. Please try again.' }
-  }
 }
 
 export default EventRegistration

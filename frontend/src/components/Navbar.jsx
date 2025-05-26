@@ -7,6 +7,7 @@ import Button from './Button'
 import Ham from './Ham'
 import { useAuth } from '../hooks/useAuth'
 import { motion, useAnimation } from 'framer-motion'
+import { ModeToggle } from './ModeToggle'
 
 const NavbarMenu = [
   {
@@ -80,6 +81,7 @@ function Navbar() {
             <p className="text-accent">Orbit</p>
             <GiOrbit />
           </Link>
+          <ModeToggle />
           {/* Menu */}
           <div className="hidden md:block">
             <ul className="flex items-center gap-4 text-primary">
