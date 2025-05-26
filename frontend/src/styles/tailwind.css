@@ -42,59 +42,8 @@
   font-family: 'Lato', sans-serif;
 }
 
-@layer {
-  .container {
-    @apply my-2 p-2;
-  }
-  .section {
-    @apply my-2 p-2;
-  }
-  .h1 {
-    @apply font-bold text-3xl;
-  }
-  .h3 {
-    @apply font-semibold text-xl;
-  }
-  .card {
-    @apply p-4 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 ease-in-out transform hover:scale-102;
-  }
-  .btn-1 {
-    @apply font-semibold rounded-xl;
-  }
-}
-
-@keyframes gradientAnimation {
-  0% {
-    background: linear-gradient(
-      135deg,
-      oklch(96% 0.03 250),
-      oklch(94% 0.04 320)
-    );
-  }
-  50% {
-    background: linear-gradient(
-      135deg,
-      oklch(96% 0.03 100),
-      oklch(94% 0.04 400)
-    );
-  }
-  100% {
-    background: linear-gradient(
-      135deg,
-      oklch(96% 0.03 250),
-      oklch(94% 0.04 320)
-    );
-  }
-}
-
 @layer components {
-  .primary-btn {
-    @apply bg-primary text-primary-content font-semibold py-3 px-6 rounded-xl shadow-[0_8px_14px_-7px_#83c5be] hover:!scale-105 duration-300;
-  }
-  .secondary-btn {
-    @apply bg-secondary text-secondary-content font-semibold py-3 px-6 rounded-xl shadow-[0_8px_14px_-7px_#83c5be] hover:!scale-105 duration-300;
-  }
   .active {
-    @apply text-accent shadow-[0_3px_0_-1px_#83c5be];
+    @apply shadow-[0_3px_0_-1px_#83c5be];
   }
 }

@@ -100,14 +100,13 @@ export default function EventList() {
         )}
       </div>
 
-      <div>
-        <Button
-          className="fixed bottom-25 right-5 primary-btn rounded-full px-6 py-4"
-          onClick={isLoggedIn ? () => navigate('/eventform') : handleClickLogin}
-        >
-          +
-        </Button>
-      </div>
+      <Button
+        className="fixed bottom-25 right-10 btn btn-primary rounded-full tooltip"
+        data-tip="Create Event"
+        onClick={isLoggedIn ? () => navigate('/eventform') : handleClickLogin}
+      >
+        +
+      </Button>
     </div>
   )
 }

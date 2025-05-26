@@ -87,11 +87,11 @@ function RightSection({ selectedEvent, setSelectedEvent, handleClick }) {
         })}
       </p>
       <div className="flex justify-between">
-        <Button className="primary-btn" onClick={handleClick}>
+        <Button className="btn btn-primary" onClick={handleClick}>
           Register
         </Button>
         <Button
-          className="secondary-btn"
+          className="btn btn-secondary"
           onClick={() => setSelectedEvent(null)}
         >
           Back
@@ -100,10 +100,10 @@ function RightSection({ selectedEvent, setSelectedEvent, handleClick }) {
       {selectedEvent?.hostId === currentUser?.id && (
         <div>
           <div className="flex justify-between">
-            <Button className="secondary-btn" onClick={handleViewParticipants}>
+            <Button className="btn btn-primary" onClick={handleViewParticipants}>
               {flag ? 'Hide' : 'View'} Participants
             </Button>
-            <Button className="primary-btn" onClick={handleNotify}>
+            <Button className="btn btn-primary" onClick={handleNotify}>
               Notify Participants
             </Button>
           </div>
