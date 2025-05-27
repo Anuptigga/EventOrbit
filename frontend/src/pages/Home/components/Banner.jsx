@@ -6,7 +6,7 @@ import Button from '../../../components/Button'
 
 function Banner() {
   return (
-    <section className="bg-secondary py-20">
+    <section className="bg-secondary text-secondary-foreground py-20">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 items-center gap-10 md:gap-40 px-4">
         {/* Image */}
         <div className="flex justify-center md:justify-end">
