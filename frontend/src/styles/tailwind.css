@@ -12,7 +12,7 @@
 
 @layer components {
   .active {
-    @apply shadow-[0_3px_0_-1px_#83c5be];
+    @apply text-secondary shadow-[0_3px_0_-1px_#83c5be];
   }
 }
 

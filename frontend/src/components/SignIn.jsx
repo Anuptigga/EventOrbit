@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { FaGithub } from 'react-icons/fa'
@@ -6,6 +6,7 @@ import { assets } from '../assets/assets'
 import { login, signup, googleLogin } from '../services/api/auth'
 import { GoogleLogin } from '@react-oauth/google'
 import { useAuth } from '../hooks/useAuth'
+import { Button } from '@/components/ui/button'
 
 const SignIn = () => {
   const { setIsOpen } = useAuth()
@@ -69,7 +70,7 @@ const SignIn = () => {
     isOpen && (
       <div className="fixed inset-0 z-[100] backdrop-blur-sm bg-neutral/30 flex justify-center items-center">
         <form
-          className="relative bg-base-100 p-8 rounded-2xl shadow-lg w-full max-w-md"
+          className="relative bg-card p-8 rounded-2xl shadow-lg w-full max-w-md"
           onSubmit={handleSubmit}
         >
           <img
@@ -136,9 +137,9 @@ const SignIn = () => {
               Forgot password?
             </a>
           </div>
-          <button type="submit" className="btn btn-primary w-full mb-2">
+          <Button type="submit" className=" w-full mb-2">
             {state}
-          </button>
+          </Button>
           <div className="divider mb-6">Or continue with</div>
           <div className="flex justify-between w-1/2">
             <GoogleLogin

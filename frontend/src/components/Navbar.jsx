@@ -3,7 +3,7 @@ import { GiOrbit } from 'react-icons/gi'
 import { Link, NavLink } from 'react-router-dom'
 import { FiLogIn } from 'react-icons/fi'
 import { MdMenu } from 'react-icons/md'
-import Button from './Button'
+import { Button } from '@/components/ui/button'
 import Ham from './Ham'
 import { useAuth } from '../hooks/useAuth'
 import { motion, useAnimation } from 'framer-motion'
@@ -88,7 +88,7 @@ function Navbar() {
               {NavbarMenu.map((item) => (
                 <li key={item.id}>
                   <NavLink
-                    className="inline-block text-xl py-1 px-3 hover:text-accent hover:shadow-[0_3px_0_-1px_#83c5be] font-semibold"
+                    className="inline-block text-xl py-1 px-3 hover:text-secondary hover:shadow-[0_3px_0_-1px_#83c5be] font-semibold"
                     to={item.path}
                   >
                     {item.name}
@@ -96,7 +96,11 @@ function Navbar() {
                 </li>
               ))}
               <Button
-                className={isLoggedIn ? 'btn btn-accent' : 'btn btn-primary'}
+                className={
+                  isLoggedIn
+                    ? 'bg-secondary text-secondary-foreground'
+                    : 'bg-primary text-primary-foreground'
+                }
                 onClick={isLoggedIn ? handleLogOut : handleClickLogin}
               >
                 {isLoggedIn ? 'Log Out' : 'Log In'}

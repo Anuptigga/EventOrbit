@@ -1,17 +1,28 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useEvent } from '../hooks/useEvent'
-import Button from './Button'
 import { Form, useNavigation } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { Button } from '@/components/ui/button'
 
 function EventRegistration() {
-  const { eventOpen, setEventOpen, selectedEventId } = useEvent()
+  const [category, setCategory] = useState('')
 
+  const { eventOpen, setEventOpen, selectedEventId } = useEvent()
   const formRef = useRef(null)
 
   const handleClose = () => {
     formRef.current?.reset()
     setEventOpen(false)
+    setCategory('')
   }
 
   useEffect(() => {
@@ -37,84 +48,97 @@ function EventRegistration() {
 
   return (
     eventOpen && (
-      <div className="fixed inset-0 z-[100] backdrop-blur-sm bg-neutral/30 flex justify-center items-center">
+      <div className="fixed inset-0 z-[100] backdrop-blur-sm flex justify-center items-center">
         <Form
           ref={formRef}
           method="POST"
           action="/eventlist"
-          className="relative bg-base-100 p-8 rounded-2xl shadow-lg w-full max-w-md"
+          className="relative bg-card p-8 rounded-2xl shadow-lg w-full max-w-md space-y-4"
           onSubmit={() => (formRef.current.dataset.submitted = 'true')}
         >
-          <h2 className="text-2xl font-bold text-center mb-6">
+          <h2 className="text-primary text-2xl font-bold text-center mb-6">
             Register to Event
           </h2>
 
-          <div className="space-y-4 mb-6">
-            <input type="hidden" name="eventId" value={selectedEventId} />
-            <input
-              type="text"
-              name="name"
-              placeholder="Full Name"
-              required
-              className="w-full outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-accent 
-              rounded-lg p-2 px-6"
-            />
-            <input
-              type="text"
-              name="branch"
-              placeholder="Branch"
-              required
-              className="w-full outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-accent 
-              rounded-lg p-2 px-6"
-            />
-            <input
-              type="number"
-              name="batch"
-              placeholder="Batch (Year)"
-              required
-              className="w-full appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-accent 
-              rounded-lg p-2 px-6"
-            />
-            <select
-              name="eventCategory"
-              className="w-full outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-accent 
-              rounded-lg p-2 px-6"
-            >
-              <option value="" disabled>
-                Select Category (optional)
-              </option>
-              <option value="None">None</option>
-              <option value="Workshop">Workshop</option>
-              <option value="Seminar">Seminar</option>
-              <option value="Competition">Competition</option>
-            </select>
-            <input
-              type="email"
-              name="email"
-              placeholder="Email Address"
-              required
-              className="w-full outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-accent 
-              rounded-lg p-2 px-6"
-            />
-            <input
-              type="tel"
-              name="phone"
-              placeholder="Phone Number"
-              required
-              className="w-full outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-accent 
-              rounded-lg p-2 px-6"
-            />
+          <input type="hidden" name="eventId" value={selectedEventId} />
+
+          <div className="grid gap-4">
+            <div className="grid gap-2">
+              <Label htmlFor="name">Full Name<span className='text-destructive'>*</span></Label>
+              <Input
+                id="name"
+                name="name"
+                type="text"
+                required
+                placeholder="Full Name"
+              />
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="branch">Branch<span className='text-destructive'>*</span></Label>
+              <Input
+                id="branch"
+                name="branch"
+                type="text"
+                required
+                placeholder="Branch"
+              />
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="batch">Batch (Year)<span className='text-destructive'>*</span></Label>
+              <Input
+                id="batch"
+                name="batch"
+                type="number"
+                required
+                placeholder="Batch Year"
+                className="appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              />
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="eventCategory">Event Category</Label>
+              <input type='hidden' name="eventCategory" value={category} />
+              <Select value={category} onValueChange={setCategory}>
+                <SelectTrigger id="eventCategory" className="w-[180px] cursor-pointer">
+                  <SelectValue placeholder="None" />
+                </SelectTrigger>
+                <SelectContent className='z-[101]'>
+                  <SelectItem value="None">None</SelectItem>
+                  <SelectItem value="Competition">Competition</SelectItem>
+                  <SelectItem value="Workshop">Workshop</SelectItem>
+                  <SelectItem value="Seminar">Seminar</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="email">Email Address<span className='text-destructive'>*</span></Label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                required
+                placeholder="Email"
+              />
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="phone">Phone Number<span className='text-destructive'>*</span></Label>
+              <Input
+                id="phone"
+                name="phone"
+                type="tel"
+                required
+                placeholder="Phone Number"
+              />
+            </div>
           </div>
 
-          <div className="flex justify-between">
-            <Button type="submit" className="primary-btn">
-              Register
-            </Button>
-            <Button
-              type="button"
-              className="secondary-btn"
-              onClick={handleClose}
-            >
+          <div className="flex justify-between mt-6">
+            <Button type="submit">Register</Button>
+            <Button type="button" variant="secondary" onClick={handleClose}>
               Back
             </Button>
           </div>
