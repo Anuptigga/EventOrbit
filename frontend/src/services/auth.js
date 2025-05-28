@@ -2,10 +2,10 @@ import axios from './axios'
 
 //login
 export const login = async (email, password) => {
-  console.log('Login function called with:', email)
+  // console.log('Login function called with:', email)
   try {
     const response = await axios.post('/auth/login', { email, password })
-    console.log('Login response:', response.data)
+    // console.log('Login response:', response.data)
     const { token } = response.data
     localStorage.setItem('token', token)
     return response.data

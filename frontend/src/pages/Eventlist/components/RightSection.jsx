@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion'
-import { getParticipants } from '../../../services/api/participant'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import { sendEmail } from '../../../services/api/email'
+import { getParticipants } from '../../../services/participant'
+import { sendEmail } from '../../../services/email'
 import { jwtDecode } from 'jwt-decode'
 import { Button } from '@/components/ui/button'
 

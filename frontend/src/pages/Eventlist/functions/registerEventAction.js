@@ -1,4 +1,4 @@
-import { registerEvent } from '../../../services/api/event'
+import { registerEvent } from '../../../services/event'
 
 export async function action({ request }) {
   try {

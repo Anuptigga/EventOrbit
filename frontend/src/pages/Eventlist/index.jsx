@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
-import { getAllEvents } from '../../services/api/event'
+import { getAllEvents } from '../../services/event'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { useEvent } from '../../hooks/useEvent'
 import { useAuth } from '../../hooks/useAuth'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import RightSection from './components/RightSection'
 import LeftSection from './components/LeftSection'
 import { Plus } from 'lucide-react'
@@ -14,7 +14,10 @@ export default function EventList() {
   const [selectedEvent, setSelectedEvent] = useState(null)
   const clickedRef = useRef(false)
 
+  const location = useLocation()
   const navigate = useNavigate()
+
+  const from = location.state?.from?.pathname || '/'
 
   const { setEventOpen, setSelectedEventId } = useEvent()
   const { isLoggedIn, handleClickLogin } = useAuth()
@@ -52,7 +55,7 @@ export default function EventList() {
       </div>
 
       {/* Divider */}
-      <div className="hidden md:block w-[1px] h-screen bg-neutral mx-auto" />
+      <div className="hidden md:block w-[1px] h-screen bg-secondary mx-auto" />
 
       {/* Right: Detail */}
       <div className="hidden md:block">

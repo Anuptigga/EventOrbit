@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { GiOrbit } from 'react-icons/gi'
 import { Link, NavLink } from 'react-router-dom'
-import { FiLogIn } from 'react-icons/fi'
 import { MdMenu } from 'react-icons/md'
-import { Button } from '@/components/ui/button'
 import Ham from './Ham'
-import { useAuth } from '../hooks/useAuth'
 import { motion, useAnimation } from 'framer-motion'
 import { ModeToggle } from './ModeToggle'
+import AuthButton from './AuthButton'
 
 const NavbarMenu = [
   {
@@ -45,8 +43,6 @@ function Navbar() {
   const controls = useAnimation()
   const [scrolled, setScrolled] = useState(false)
 
-  const { handleClickLogin, isLoggedIn, handleLogOut } = useAuth()
-
   useEffect(() => {
     const onScroll = () => {
       const isScrolled = window.scrollY > 10
@@ -75,41 +71,34 @@ function Navbar() {
           {/* Logo */}
           <Link
             to="/"
-            className="text-2xl flex items-center gap-2 font-bold uppercase"
+            className="text-3xl flex items-center gap-2 font-bold uppercase"
           >
             <p className="text-primary">Event</p>
-            <p className="text-accent">Orbit</p>
+            <p className="text-secondary">Orbit</p>
             <GiOrbit />
           </Link>
-          <ModeToggle />
+          <ModeToggle className="hidden md:block" />
           {/* Menu */}
           <div className="hidden md:block">
             <ul className="flex items-center gap-4 text-primary">
               {NavbarMenu.map((item) => (
                 <li key={item.id}>
                   <NavLink
-                    className="inline-block text-xl py-1 px-3 hover:text-secondary hover:shadow-[0_3px_0_-1px_#83c5be] font-semibold"
+                    className="inline-block text-2xl py-1 px-3 hover:text-secondary hover:shadow-[0_3px_0_-1px_var(--accent)] font-semibold"
                     to={item.path}
                   >
                     {item.name}
                   </NavLink>
                 </li>
               ))}
-              <Button
-                className={
-                  isLoggedIn
-                    ? 'bg-secondary text-secondary-foreground'
-                    : 'bg-primary text-primary-foreground'
-                }
-                onClick={isLoggedIn ? handleLogOut : handleClickLogin}
-              >
-                {isLoggedIn ? 'Log Out' : 'Log In'}
-                <FiLogIn />
-              </Button>
             </ul>
           </div>
+          <AuthButton className="hidden md:block" />
           {/* Mobile */}
-          <div className="md:hidden" onClick={() => setOpen(!open)}>
+          <div
+            className="md:hidden cursor-pointer"
+            onClick={() => setOpen(!open)}
+          >
             <MdMenu className="text-4xl" />
           </div>
         </motion.div>

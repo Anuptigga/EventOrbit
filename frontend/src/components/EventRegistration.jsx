@@ -14,7 +14,7 @@ import {
 import { Button } from '@/components/ui/button'
 
 function EventRegistration() {
-  const [category, setCategory] = useState('')
+  const [category, setCategory] = useState('None')
 
   const { eventOpen, setEventOpen, selectedEventId } = useEvent()
   const formRef = useRef(null)

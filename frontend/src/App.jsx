@@ -6,6 +6,7 @@ import { action as createEvent } from './pages/Eventform/functions/createEventAc
 import EventList from './pages/Eventlist'
 import { action as registerEvent } from './pages/Eventlist/functions/registerEventAction'
 import Error from './pages/Error'
+import { action as authAction } from './functions/authAction'
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: '*',
         element: <Error />,
+      },
+      {
+        path: 'auth',
+        action: authAction,
       },
     ],
   },

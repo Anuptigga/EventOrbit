@@ -1,12 +1,11 @@
-import React from 'react'
-import {assets} from '../../../assets/assets'
+import { assets } from '../../../assets/assets'
 import { FadeLeft } from '../../../utility/animation'
 import { motion } from 'framer-motion'
-import Button from '../../../components/Button'
+import { Button } from '@/components/ui/button'
 
 function Banner() {
   return (
-    <section className="bg-popover text-popover-foreground py-20">
+    <section className="bg-transparent text-popover-foreground py-20">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 items-center gap-10 md:gap-40 px-4">
         {/* Image */}
         <div className="flex justify-center md:justify-end">

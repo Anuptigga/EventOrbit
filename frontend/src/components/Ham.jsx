@@ -1,6 +1,8 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { ModeToggle } from './ModeToggle'
+import AuthButton from './AuthButton.jsx'
 
 function Ham({ open, setOpen }) {
   useEffect(() => {
@@ -32,8 +34,9 @@ function Ham({ open, setOpen }) {
           transition={{ duration: 0.3 }}
           className="fixed top-20 left-0 w-full h-screen z-20"
         >
-          <div className="backdrop-blur-md bg-primary/60 text-2xl font-semibold uppercase text-primary-content py-10 m-6 rounded-3xl shadow-lg">
+          <div className="backdrop-blur-md bg-accent/60 text-2xl font-semibold uppercase text-primary-content py-10 m-6 rounded-3xl shadow-lg">
             <ul className="flex flex-col items-center gap-8">
+              <ModeToggle />
               <li>
                 <Link to="about" onClick={handleClose}>
                   About
@@ -49,6 +52,7 @@ function Ham({ open, setOpen }) {
                   Events
                 </Link>
               </li>
+              <AuthButton />
             </ul>
           </div>
         </motion.div>
