@@ -81,7 +81,7 @@ const SignIn = () => {
 
   return (
     isOpen && (
-      <div className="fixed inset-0 z-[100] backdrop-blur-sm flex justify-center items-center">
+      <div className="fixed inset-0 z-[100] backdrop-blur-sm flex justify-center items-center p-4">
         <fetcher.Form
           ref={formRef}
           method="POST"

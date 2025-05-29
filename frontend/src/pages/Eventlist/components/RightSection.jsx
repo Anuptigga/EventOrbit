@@ -69,7 +69,7 @@ function RightSection({ selectedEvent, setSelectedEvent, handleClick }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
       transition={{ duration: 0.3 }}
-      className=" rounded-lg p-6 space-y-4"
+      className=" rounded-lg space-y-4 pb-25"
     >
       <h2 className="text-3xl font-bold text-primary">{selectedEvent.eventName}</h2>
       <img

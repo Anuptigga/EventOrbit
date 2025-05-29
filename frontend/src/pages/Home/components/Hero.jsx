@@ -38,7 +38,7 @@ function Hero() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false }}
-              className="text-lg text-accent-foreground font-medium tracking-wide"
+              className="text-lg text-secondary font-medium tracking-wide"
             >
               Create events, track participation, and stay updated — all in one
               place. Empowering students to lead, manage, and make a difference
@@ -51,7 +51,7 @@ function Hero() {
               viewport={{ once: false }}
               className="flex justify-center md:justify-start"
             >
-              <Button onClick={() => navigate('/eventlist')}>
+              <Button onClick={() => navigate('/eventlist')} className='text-md'>
                 <VscDebugStart />
                 Explore Events
               </Button>

@@ -41,7 +41,7 @@ export default function EventList() {
   }, [])
 
   return (
-    <div className="bg-base-200 grid grid-cols-1 md:grid-cols-[1fr_1px_2fr] w-full px-20 pt-30 min-h-screen gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-[1fr_1px_2fr] w-full px-6 pt-25 md:pt-30 min-h-screen gap-6">
       {/* Left: List */}
       <div className="hidden md:block space-y-4">
         {events.map((event) => (
@@ -55,7 +55,7 @@ export default function EventList() {
       </div>
 
       {/* Divider */}
-      <div className="hidden md:block w-[1px] h-screen bg-secondary mx-auto" />
+      <div className="hidden md:block w-[1px] h-full bg-secondary mx-auto" />
 
       {/* Right: Detail */}
       <div className="hidden md:block">

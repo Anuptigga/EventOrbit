@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { GiOrbit } from 'react-icons/gi'
 import { Link, NavLink } from 'react-router-dom'
 import { MdMenu } from 'react-icons/md'
@@ -42,6 +42,7 @@ function Navbar() {
   const [open, setOpen] = useState(false)
   const controls = useAnimation()
   const [scrolled, setScrolled] = useState(false)
+  const hamRef = useRef(null)
 
   useEffect(() => {
     const onScroll = () => {
@@ -98,13 +99,14 @@ function Navbar() {
           <div
             className="md:hidden cursor-pointer"
             onClick={() => setOpen(!open)}
+            ref={hamRef}
           >
             <MdMenu className="text-4xl" />
           </div>
         </motion.div>
       </motion.nav>
       {/* Mobile Menu Section */}
-      <Ham open={open} setOpen={setOpen} />
+      <Ham open={open} setOpen={setOpen} hamRef={hamRef} />
     </>
   )
 }

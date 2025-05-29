@@ -22,7 +22,7 @@ function EventRegistration() {
   const handleClose = () => {
     formRef.current?.reset()
     setEventOpen(false)
-    setCategory('')
+    setCategory('None')
   }
 
   useEffect(() => {
@@ -48,7 +48,7 @@ function EventRegistration() {
 
   return (
     eventOpen && (
-      <div className="fixed inset-0 z-[100] backdrop-blur-sm flex justify-center items-center">
+      <div className="fixed inset-0 z-[100] backdrop-blur-sm flex justify-center items-center p-4">
         <Form
           ref={formRef}
           method="POST"
@@ -70,7 +70,7 @@ function EventRegistration() {
                 name="name"
                 type="text"
                 required
-                placeholder="Full Name"
+                placeholder="Name"
               />
             </div>
 
@@ -92,7 +92,7 @@ function EventRegistration() {
                 name="batch"
                 type="number"
                 required
-                placeholder="Batch Year"
+                placeholder="Batch"
                 className="appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               />
             </div>
@@ -131,7 +131,7 @@ function EventRegistration() {
                 name="phone"
                 type="tel"
                 required
-                placeholder="Phone Number"
+                placeholder="Phone"
               />
             </div>
           </div>
