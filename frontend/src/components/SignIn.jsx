@@ -67,7 +67,7 @@ const SignIn = () => {
   const renderInput = (label, name, type = 'text', required = true) => (
     <div className="mb-4">
       <Label className="block text-secondary m-2">
-        {label} {required && <span className="text-red-500">*</span>}
+        {label} {required && <span className="text-destructive">*</span>}
       </Label>
       <Input
         name={name}

@@ -6,10 +6,17 @@ import {
   useNavigate,
   useNavigation,
 } from 'react-router-dom'
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { Textarea } from '@/components/ui/textarea'
+import { GiCrossMark } from 'react-icons/gi'
+import { DatePicker } from '../../../components/DatePicker'
 
 function CreateEvent() {
   const [newCategory, setNewCategory] = useState('')
   const [eventCategory, setEventCategory] = useState([])
+  const [date, setDate] = useState('')
 
   const actionData = useActionData()
   const navigation = useNavigation()
@@ -18,12 +25,15 @@ function CreateEvent() {
 
   const handleAddCategory = () => {
     const trimmed = newCategory.trim()
+    if (!trimmed) return toast.error('Category cannot be empty')
     if (
       trimmed &&
       !eventCategory.some((cat) => cat.toLowerCase() === trimmed.toLowerCase())
     ) {
       setEventCategory([...eventCategory, trimmed])
       setNewCategory('')
+    } else {
+      toast.error('Category already exists')
     }
   }
 
@@ -73,67 +83,49 @@ function CreateEvent() {
         value={JSON.stringify(eventCategory)}
       />
 
-      <div className="flex flex-col space-y-1">
-        <label className="font-semibold">
-          Event Name <span className="text-error">*</span>
-        </label>
-        <input
-          type="text"
-          name="eventName"
-          required
-          className="w-full px-4 py-2 rounded-lg border shadow-sm outline-none"
-          placeholder="Type your event's name"
-        />
+      <div className="flex flex-col space-y-2">
+        <Label className="text-secondary font-semibold">
+          Event Name <span className="text-destructive">*</span>
+        </Label>
+        <Input type="text" name="eventName" required placeholder="Event Name" />
       </div>
 
-      <div className="flex flex-col space-y-1">
-        <label className="font-semibold">
-          Event Description <span className="text-error">*</span>
-        </label>
-        <textarea
+      <div className="flex flex-col space-y-2">
+        <Label className="text-secondary font-semibold">
+          Event Description <span className="text-destructive">*</span>
+        </Label>
+        <Textarea
           name="eventDescription"
-          rows="3"
           required
-          className="w-full px-4 py-2 rounded-lg border shadow-sm outline-none resize-none"
-          placeholder="Describe your event..."
+          placeholder="Describe your event"
         />
       </div>
 
-      <div className="flex flex-col space-y-1">
-        <label className="font-semibold">
-          Event Date <span className="text-error">*</span>
-        </label>
-        <input
-          type="date"
-          name="eventDate"
-          required
-          className="w-full px-4 py-2 rounded-lg border shadow-sm outline-none"
-        />
+      <input type="hidden" name="eventDate" value={date} />
+      <div className="flex flex-col space-y-2">
+        <Label className="text-secondary font-semibold">
+          Event Date <span className="text-destructive">*</span>
+        </Label>
+        <DatePicker date={date} setDate={setDate} />
       </div>
 
-      <div className="flex flex-col space-y-1">
-        <label className="font-semibold">
-          Event Venue <span className="text-error">*</span>
-        </label>
-        <input
-          type="text"
-          name="eventVenue"
-          required
-          className="w-full px-4 py-2 rounded-lg border shadow-sm outline-none"
-          placeholder="Enter event venue"
-        />
+      <div className="flex flex-col space-y-2">
+        <Label className="text-secondary font-semibold">
+          Event Venue <span className="text-destructive">*</span>
+        </Label>
+        <Input type="text" name="eventVenue" required placeholder="Venue" />
       </div>
 
-      <div className="flex flex-col space-y-1">
-        <label className="font-semibold">
-          Event Poster <span className="text-error">*</span>
-        </label>
+      <div className="flex flex-col space-y-2">
+        <Label className="text-secondary font-semibold">
+          Event Poster <span className="text-destructive">*</span>
+        </Label>
         <input
           type="file"
           name="img"
           accept="image/*"
           required
-          className="file:mr-4 file:rounded-full file:border-0 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-primary-content file:bg-primary file:cursor-pointer"
+          className="file:mr-4 file:rounded-full file:border-0 file:px-4 file:py-2 file:text-sm font-semibold file:text-primary-foreground file:bg-primary file:cursor-pointer"
         />
       </div>
 
@@ -143,20 +135,20 @@ function CreateEvent() {
           Event Categories (Optional)
         </h3>
         <div className="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-2 md:space-y-0">
-          <input
+          <Input
             type="text"
             value={newCategory}
             onChange={(e) => setNewCategory(e.target.value)}
             placeholder="e.g. Sports, Cultural"
-            className="flex-1 px-4 py-2 rounded-lg border outline-none"
+            // className="flex-1 px-4 py-2 rounded-lg border outline-none"
           />
-          <button
+          <Button
             type="button"
             onClick={handleAddCategory}
-            className="bg-primary text-white px-4 py-2 rounded-lg"
+            className="px-4 py-2 rounded-lg text-lg"
           >
             Add Category
-          </button>
+          </Button>
         </div>
 
         <div className="mt-4 space-y-2">
@@ -169,21 +161,18 @@ function CreateEvent() {
               <button
                 type="button"
                 onClick={() => handleRemoveCategory(idx)}
-                className="text-primary font-bold"
+                className="text-primary font-bold cursor-pointer"
               >
-                ✕
+                <GiCrossMark />
               </button>
             </div>
           ))}
         </div>
       </div>
 
-      <button
-        type="submit"
-        className="w-full bg-primary text-white font-semibold py-3 px-4 rounded-xl transition"
-      >
+      <Button type="submit" className="w-full px-4 py-2 rounded-lg text-lg">
         Create Event
-      </button>
+      </Button>
     </Form>
   )
 }
